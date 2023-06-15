@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "965477297234",
+    "project_id": "historia-d4df4",
+    "storage_bucket": "historia-d4df4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965477297234:android:1da471e5e1b6d84a6a438b",
+        "android_client_info": {
+          "package_name": "com.anwarnas.historia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "965477297234-5e00khh7seg7fbmer3ff87rfsp5m7nai.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDntsAChogLYCd805DeOzmT3a7-JgC4VAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "965477297234-5e00khh7seg7fbmer3ff87rfsp5m7nai.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
