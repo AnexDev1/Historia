@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   children: [
                     ListBox(
-                      color: Colors.green[300],
+                      imagePath: 'assets/palce.jpg',
                       text: 'Places',
                       onTap: () {
                         Navigator.push(
@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
                       width: 10.0,
                     ),
                     ListBox(
-                      color: Colors.orange[300],
+                      imagePath: 'assets/people.jpg',
                       text: 'People',
                       onTap: () {
                         Navigator.push(
@@ -82,7 +82,7 @@ class HomePage extends StatelessWidget {
                       width: 10.0,
                     ),
                     ListBox(
-                      color: Colors.grey[600],
+                      imagePath: 'assets/city.jpg',
                       text: 'Cities',
                       onTap: () {
                         Navigator.push(

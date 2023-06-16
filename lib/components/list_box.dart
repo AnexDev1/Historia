@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class ListBox extends StatelessWidget {
   const ListBox({
     Key? key,
-    required this.color,
+    required this.imagePath,
     required this.text,
     required this.onTap,
   }) : super(key: key);
 
-  final Color? color;
   final String text;
   final Function() onTap;
+  final String imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,10 @@ class ListBox extends StatelessWidget {
         child: Container(
           width: 140.0,
           decoration: BoxDecoration(
-            color: color,
+            image: DecorationImage(
+              image: AssetImage(imagePath),
+              fit: BoxFit.cover,
+            ),
             borderRadius: const BorderRadius.all(
               Radius.circular(20.0),
             ),
