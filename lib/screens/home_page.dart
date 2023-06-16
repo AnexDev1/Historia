@@ -25,19 +25,37 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  GestureDetector(
+                    onTap: () {},
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Container(
+                        color: Colors.grey[400],
+                        padding: const EdgeInsets.all(8.0),
+                        child: const Icon(
+                          Icons.menu,
+                          size: 30.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10.0),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
-                    child: CircleAvatar(
-                      radius: 30.0,
-                      backgroundColor: Colors.brown[200],
-                      child: const Text(
-                        'An',
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                    child: Container(
+                      color: Colors.grey[400],
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          'An',
+                          style: TextStyle(
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black54,
+                          ),
                         ),
                       ),
                     ),
@@ -106,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(top: 30.0),
+                padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
                 alignment: Alignment.centerLeft,
                 child: const Text(
                   'Recently Added',
@@ -161,7 +179,8 @@ class _HomePageState extends State<HomePage> {
                                   height: 90.0,
                                   child: ClipRRect(
                                     borderRadius: const BorderRadius.all(
-                                        Radius.circular(6.0)),
+                                      Radius.circular(6.0),
+                                    ),
                                     child: Image.network(
                                       data['imageLink'],
                                       fit: BoxFit.cover,
@@ -176,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                                       gradient: LinearGradient(
                                         colors: [
                                           Colors.grey[400]!,
-                                          Colors.grey[300]!
+                                          Colors.grey[300]!,
                                         ],
                                         begin: Alignment.topRight,
                                         end: Alignment.bottomLeft,
