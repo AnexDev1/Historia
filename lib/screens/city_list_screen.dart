@@ -45,13 +45,13 @@ class _CitiesListScreenState extends State<CitiesListScreen> {
           child: TextFormField(
             controller: _searchController,
             onChanged: _filterCities,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Search by City Name',
               hintStyle: TextStyle(color: Colors.grey),
               border: InputBorder.none,
               prefixIcon: Icon(Icons.search, color: Colors.grey),
             ),
-            style: TextStyle(color: Colors.black, fontSize: 18.0),
+            style: const TextStyle(color: Colors.black, fontSize: 18.0),
           ),
         ),
         toolbarHeight: 80.0,
@@ -105,7 +105,7 @@ class _CitiesListScreenState extends State<CitiesListScreen> {
                         final data = doc.data() as Map<String, dynamic>?;
 
                         if (data == null) {
-                          return SizedBox.shrink();
+                          return const SizedBox.shrink();
                         }
 
                         final imageLink = data['imageLink'] as String;
