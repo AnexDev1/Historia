@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:historia/components/list_box.dart';
 import 'package:historia/screens/city_list_screen.dart';
 import 'package:historia/screens/people_list_screen.dart';
 import 'package:historia/screens/places_list_screen.dart';
+import 'package:historia/screens/places_screen.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key});
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -100,13 +109,96 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 20.0),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  'Recently Viewed',
+                  'Recently Added',
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-              )
+              ),
+              Expanded(
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: _firestore.collection('places').limit(1).snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      return const Center(child: Text('No data found'));
+                    }
+
+                    final documents = snapshot.data!.docs;
+
+                    return ListView.builder(
+                      itemCount: documents.length,
+                      itemBuilder: (context, index) {
+                        final doc = documents[index];
+                        final data = doc.data() as Map<String, dynamic>;
+
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PlacesScreen(
+                                  documentId: doc.id,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 80.0,
+                                  height: 90.0,
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6.0)),
+                                    child: Image.network(
+                                      data['imageLink'],
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    height: 65.0,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: const BorderRadius.only(
+                                        topRight: Radius.circular(10.0),
+                                        bottomRight: Radius.circular(10.0),
+                                      ),
+                                    ),
+                                    child: ListTile(
+                                      title: Text(
+                                        data['title'],
+                                        style: const TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
