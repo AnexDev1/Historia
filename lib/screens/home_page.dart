@@ -15,10 +15,71 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _firestore = FirebaseFirestore.instance;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            Container(
+              color: const Color(0xff757575),
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFFA8C0FF),
+                      Color(0xFF3F2B96),
+                    ],
+                    begin: Alignment.bottomRight,
+                    end: Alignment.bottomLeft,
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.clamp,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20.0),
+                  ),
+                ),
+                child: const DrawerHeader(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    'Drawer Header',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                bottomRight: Radius.circular(20.0),
+              ),
+              child: ListTile(
+                title: const Text('Item 1'),
+                onTap: () {
+                  // Add your navigation logic here
+                },
+              ),
+            ),
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                bottomRight: Radius.circular(20.0),
+              ),
+              child: ListTile(
+                title: const Text('Item 2'),
+                onTap: () {
+                  // Add your navigation logic here
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
@@ -27,19 +88,14 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    onTap: () {},
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: Container(
-                        color: Colors.grey[400],
-                        padding: const EdgeInsets.all(8.0),
-                        child: const Icon(
-                          Icons.menu,
-                          size: 30.0,
-                          color: Colors.black,
-                        ),
-                      ),
+                  IconButton(
+                    onPressed: () {
+                      _scaffoldKey.currentState?.openDrawer();
+                    },
+                    icon: const Icon(
+                      Icons.menu,
+                      size: 30.0,
+                      color: Colors.black,
                     ),
                   ),
                   const SizedBox(width: 10.0),
@@ -63,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               const Padding(
-                padding: EdgeInsets.symmetric(vertical: 30.0),
+                padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Text(
                   'Know your Heritage',
                   style: TextStyle(
@@ -124,7 +180,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
+                padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
                 alignment: Alignment.centerLeft,
                 child: const Text(
                   'Recently Added',
@@ -136,7 +192,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: _firestore.collection('places').limit(1).snapshots(),
+                  stream: _firestore.collection('places').limit(2).snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasError) {
@@ -158,7 +214,6 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (context, index) {
                         final doc = documents[index];
                         final data = doc.data() as Map<String, dynamic>;
-
                         return GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -174,44 +229,53 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Row(
                               children: [
-                                SizedBox(
-                                  width: 80.0,
-                                  height: 90.0,
-                                  child: ClipRRect(
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(6.0),
-                                    ),
-                                    child: Image.network(
-                                      data['imageLink'],
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
                                 Expanded(
-                                  child: Container(
-                                    height: 65.0,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Colors.grey[400]!,
-                                          Colors.grey[300]!,
-                                        ],
-                                        begin: Alignment.topRight,
-                                        end: Alignment.bottomLeft,
+                                  child: FractionallySizedBox(
+                                    alignment: Alignment.centerLeft,
+                                    widthFactor: 0.9,
+                                    child: Material(
+                                      elevation: 4.0,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(10.0),
                                       ),
-                                      borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(10.0),
-                                        bottomRight: Radius.circular(10.0),
-                                      ),
-                                    ),
-                                    child: ListTile(
-                                      title: Text(
-                                        data['title'],
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.bold,
+                                      child: Container(
+                                        height: 55.0,
+                                        alignment: Alignment.center,
+                                        decoration: const BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Color(0xFFA8C0FF),
+                                              Color(0xFF3F2B96),
+                                            ],
+                                            begin: Alignment.bottomRight,
+                                            end: Alignment.bottomLeft,
+                                            stops: [0.0, 1.0],
+                                            tileMode: TileMode.clamp,
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0),
+                                          ),
+                                        ),
+                                        child: ListTile(
+                                          title: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                data['title'],
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  fontSize: 18.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              const Icon(
+                                                Icons.arrow_forward,
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
