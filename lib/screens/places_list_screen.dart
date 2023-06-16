@@ -46,7 +46,7 @@ class _PlacesListScreenState extends State<PlacesListScreen> {
             controller: _searchController,
             onChanged: _filterPlaces,
             decoration: const InputDecoration(
-              hintText: 'Search by Country Tag',
+              hintText: 'Search by Country',
               hintStyle: TextStyle(color: Colors.grey),
               border: InputBorder.none,
               prefixIcon: Icon(Icons.search, color: Colors.grey),
