@@ -69,12 +69,15 @@ class PeopleListScreen extends StatelessWidget {
                               ),
                             );
                           },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7.0),
-                              image: DecorationImage(
-                                image: NetworkImage(imageLink),
-                                fit: BoxFit.cover,
+                          child: Hero(
+                            tag: imageLink,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7.0),
+                                image: DecorationImage(
+                                  image: NetworkImage(imageLink),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),
