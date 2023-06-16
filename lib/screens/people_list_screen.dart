@@ -2,15 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:historia/screens/people_screen.dart';
 
-class PeoplesListScreen extends StatelessWidget {
-  const PeoplesListScreen({Key? key}) : super(key: key);
+class PeopleListScreen extends StatelessWidget {
+  const PeopleListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'የሰዎች ዝርዝር',
+          'People List',
           style: TextStyle(fontSize: 30.0),
         ),
         toolbarHeight: 80.0,

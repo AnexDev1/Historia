@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 class ListBox extends StatelessWidget {
   const ListBox({
-    super.key,
+    Key? key,
     required this.color,
     required this.text,
     required this.onTap,
-  });
+  }) : super(key: key);
+
   final Color? color;
   final String text;
   final Function() onTap;

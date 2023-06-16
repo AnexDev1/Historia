@@ -5,7 +5,7 @@ import 'package:historia/screens/people_list_screen.dart';
 import 'package:historia/screens/places_list_screen.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     ListBox(
                       color: Colors.green[300],
-                      text: 'ቦታዎች',
+                      text: 'Places',
                       onTap: () {
                         Navigator.push(
                           context,
@@ -68,12 +68,12 @@ class HomePage extends StatelessWidget {
                     ),
                     ListBox(
                       color: Colors.orange[300],
-                      text: 'ሰዎች',
+                      text: 'People',
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const PeoplesListScreen(),
+                            builder: (context) => const PeopleListScreen(),
                           ),
                         );
                       },
@@ -83,7 +83,7 @@ class HomePage extends StatelessWidget {
                     ),
                     ListBox(
                       color: Colors.grey[600],
-                      text: 'ከተሞች',
+                      text: 'Cities',
                       onTap: () {
                         Navigator.push(
                           context,

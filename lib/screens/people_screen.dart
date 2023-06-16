@@ -11,7 +11,7 @@ class PeopleScreen extends StatefulWidget {
 }
 
 class _PeopleScreenState extends State<PeopleScreen> {
-  final _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {

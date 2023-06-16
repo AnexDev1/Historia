@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CityScreen extends StatefulWidget {
-  final String documentId; // New parameter
+  final String documentId;
 
   const CityScreen({Key? key, required this.documentId}) : super(key: key);
 
@@ -11,17 +11,14 @@ class CityScreen extends StatefulWidget {
 }
 
 class _CityScreenState extends State<CityScreen> {
-  final _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder<DocumentSnapshot>(
-          future: _firestore
-              .collection('cities')
-              .doc(widget.documentId) // Use the provided document ID
-              .get(),
+          future: _firestore.collection('cities').doc(widget.documentId).get(),
           builder:
               (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
             if (snapshot.hasError) {
@@ -63,13 +60,15 @@ class _CityScreenState extends State<CityScreen> {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
-                      child: Image.network(imageLink), // Use NetworkImage
+                      child: Image.network(imageLink),
                     ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                      vertical: 20.0, horizontal: 30.0),
+                    vertical: 20.0,
+                    horizontal: 30.0,
+                  ),
                   child: Text(
                     data['title'],
                     textAlign: TextAlign.left,

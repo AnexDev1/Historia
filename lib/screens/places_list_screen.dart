@@ -10,7 +10,7 @@ class PlacesListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'የቦታ ዝርዝር',
+          'Places List',
           style: TextStyle(fontSize: 30.0),
         ),
         toolbarHeight: 80.0,
