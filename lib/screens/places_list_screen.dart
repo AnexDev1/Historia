@@ -76,25 +76,6 @@ class PlacesListScreen extends StatelessWidget {
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                title,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 20.0,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  shadows: [
-                                    Shadow(
-                                      color: Colors.black,
-                                      offset: Offset(3.0, 4.0),
-                                      blurRadius: 7.0,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
                           ),
                         );
                       },
