@@ -3,9 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:historia/components/drawer_widget.dart';
 import 'package:historia/components/list_box.dart';
 import 'package:historia/screens/city_list_screen.dart';
+import 'package:historia/screens/login.dart';
 import 'package:historia/screens/people_list_screen.dart';
 import 'package:historia/screens/places_list_screen.dart';
 import 'package:historia/screens/places_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -54,35 +56,49 @@ class _HomePageState extends State<HomePage> {
             color: Colors.black,
           ),
         ),
-        const SizedBox(width: 10.0),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10.0),
-          child: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFFA8C0FF),
-                  Color(0xFF3F2B96),
-                ],
-                begin: Alignment.bottomRight,
-                end: Alignment.bottomLeft,
-              ),
-            ),
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'An',
-                style: TextStyle(
-                  fontSize: 25.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
+        IconButton(
+          onPressed: () {
+            _logout();
+          },
+          icon: const Icon(
+            Icons.logout,
+            size: 30.0,
+            color: Colors.black,
           ),
         ),
       ],
     );
+  }
+
+  void _logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Navigator.popUntil(context, (route) => route.isFirst);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    } catch (error) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Logout Failed'),
+            content: const Text(
+              'An error occurred while logging out. Please try again.',
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   Widget buildTitle() {
