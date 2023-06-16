@@ -29,11 +29,11 @@ class _PlacesScreenState extends State<PlacesScreen> {
             }
 
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
 
             if (!snapshot.hasData || !snapshot.data!.exists) {
-              return Center(child: Text('No data found'));
+              return const Center(child: Text('No data found'));
             }
 
             final data = snapshot.data!.data() as Map<String, dynamic>;
@@ -73,7 +73,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
                   child: Text(
                     data['title'],
                     textAlign: TextAlign.left,
-                    style: TextStyle(
+                    style: const TextStyle(
                       height: .9,
                       letterSpacing: .2,
                       fontSize: 40.0,
@@ -86,7 +86,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
                   padding: const EdgeInsets.only(left: 30.0, right: 30.0),
                   child: Text(
                     data['description'],
-                    style: TextStyle(
+                    style: const TextStyle(
                       height: 1.5,
                       fontSize: 18.0,
                     ),
