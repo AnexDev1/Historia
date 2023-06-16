@@ -54,7 +54,6 @@ class PlacesListScreen extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         final doc = snapshot.data!.docs[index];
                         final data = doc.data() as Map<String, dynamic>;
-                        final title = data['title'];
                         final imageLink = data['imageLink'];
                         final documentId = doc.id;
 
