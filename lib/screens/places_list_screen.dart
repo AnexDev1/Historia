@@ -22,7 +22,8 @@ class PlacesListScreen extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 20.0, horizontal: 15.0),
                 child: FutureBuilder<QuerySnapshot>(
                   future: FirebaseFirestore.instance.collection('places').get(),
                   builder: (BuildContext context,
@@ -45,9 +46,9 @@ class PlacesListScreen extends StatelessWidget {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 1.0,
-                        crossAxisSpacing: 10.0,
-                        mainAxisSpacing: 10.0,
+                        childAspectRatio: .8,
+                        crossAxisSpacing: 15.0,
+                        mainAxisSpacing: 15.0,
                       ),
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (BuildContext context, int index) {
