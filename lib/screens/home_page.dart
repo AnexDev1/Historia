@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(top: 20.0),
+                padding: const EdgeInsets.only(top: 30.0),
                 alignment: Alignment.centerLeft,
                 child: const Text(
                   'Recently Added',
@@ -173,7 +173,14 @@ class _HomePageState extends State<HomePage> {
                                     height: 65.0,
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
-                                      color: Colors.grey[300],
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Colors.grey[400]!,
+                                          Colors.grey[300]!
+                                        ],
+                                        begin: Alignment.topRight,
+                                        end: Alignment.bottomLeft,
+                                      ),
                                       borderRadius: const BorderRadius.only(
                                         topRight: Radius.circular(10.0),
                                         bottomRight: Radius.circular(10.0),
@@ -182,8 +189,9 @@ class _HomePageState extends State<HomePage> {
                                     child: ListTile(
                                       title: Text(
                                         data['title'],
+                                        textAlign: TextAlign.center,
                                         style: const TextStyle(
-                                          fontSize: 16.0,
+                                          fontSize: 18.0,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
