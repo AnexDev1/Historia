@@ -110,7 +110,7 @@ Widget buildDrawerItem(String title, IconData icon, BuildContext context) {
             color: Colors.white,
           ),
           onTap: () {
-            if (title == 'about') {
+            if (title == 'About') {
               Navigator.push(
                 context,
                 MaterialPageRoute(

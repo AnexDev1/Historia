@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 class PlacesScreen extends StatefulWidget {
-  final String documentId; // New parameter
+  final String documentId;
 
   const PlacesScreen({Key? key, required this.documentId}) : super(key: key);
 
@@ -13,15 +14,17 @@ class PlacesScreen extends StatefulWidget {
 class _PlacesScreenState extends State<PlacesScreen> {
   final _firestore = FirebaseFirestore.instance;
 
+  void _shareContent(String title, String description) {
+    final text = '$title\n\n$description';
+    Share.share(text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder<DocumentSnapshot>(
-          future: _firestore
-              .collection('places')
-              .doc(widget.documentId) // Use the provided document ID
-              .get(),
+          future: _firestore.collection('places').doc(widget.documentId).get(),
           builder:
               (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
             if (snapshot.hasError) {
@@ -44,12 +47,25 @@ class _PlacesScreenState extends State<PlacesScreen> {
                 Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.only(top: 20.0, left: 15.0),
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.black,
-                    onPressed: () {
-                      return Navigator.pop(context);
-                    },
-                    child: const Icon(Icons.close),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      FloatingActionButton(
+                        backgroundColor: Colors.black,
+                        onPressed: () {
+                          return Navigator.pop(context);
+                        },
+                        child: const Icon(Icons.close),
+                      ),
+                      const SizedBox(width: 10.0),
+                      FloatingActionButton(
+                        backgroundColor: Colors.black,
+                        onPressed: () {
+                          _shareContent(data['title'], data['description']);
+                        },
+                        child: const Icon(Icons.share),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
@@ -65,7 +81,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
                       tag: imageLink,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10.0),
-                        child: Image.network(imageLink), // Use NetworkImage
+                        child: Image.network(imageLink),
                       ),
                     ),
                   ),
