@@ -50,7 +50,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 56,
                         height: 56,
                         child: InkWell(
@@ -59,11 +59,11 @@ class _PlacesScreenState extends State<PlacesScreen> {
                           },
                           borderRadius: BorderRadius.circular(28),
                           child: Ink(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.black,
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(
+                            child: const Icon(
                               Icons.close,
                               color: Colors.white,
                               size: 24,

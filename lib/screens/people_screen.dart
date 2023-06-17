@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 class PeopleScreen extends StatefulWidget {
   final String documentId; // New parameter
@@ -12,6 +13,11 @@ class PeopleScreen extends StatefulWidget {
 
 class _PeopleScreenState extends State<PeopleScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  void _shareContent(String title, String description) {
+    final text = '$title\n\n$description';
+    Share.share(text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +50,42 @@ class _PeopleScreenState extends State<PeopleScreen> {
                 Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.only(top: 20.0, left: 15.0),
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.black,
-                    onPressed: () {
-                      return Navigator.pop(context);
-                    },
-                    child: const Icon(Icons.close),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 56,
+                        height: 56,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          borderRadius: BorderRadius.circular(28),
+                          child: Ink(
+                            decoration: const BoxDecoration(
+                              color: Colors.black,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.close,
+                              color: Colors.white,
+                              size: 24,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10.0),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20.0),
+                        child: FloatingActionButton(
+                          backgroundColor: Colors.black,
+                          onPressed: () {
+                            _shareContent(data['title'], data['description']);
+                          },
+                          child: const Icon(Icons.share),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
