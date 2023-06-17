@@ -31,19 +31,19 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
               Container(
                 width: double.infinity,
-                height: 250.0,
+                height: 220.0,
                 decoration: const BoxDecoration(
-                  color: Colors.blue,
+                  color: Color.fromARGB(255, 138, 113, 247),
                   borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(70.0),
-                    bottomRight: Radius.circular(70.0),
+                    bottomLeft: Radius.circular(20.0),
+                    bottomRight: Radius.circular(20.0),
                   ),
                 ),
                 child: Center(
                   child: Text(
                     _pageLogin ? 'Welcome Back!' : 'Create an Account',
                     style: const TextStyle(
-                      fontSize: 24,
+                      fontSize: 34,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
@@ -62,11 +62,15 @@ class _LoginPageState extends State<LoginPage> {
                       minWidth: 0,
                       highlightColor: Colors.transparent,
                       splashColor: Colors.transparent,
-                      color: _pageLogin ? Colors.blue : Colors.white,
+                      color: _pageLogin
+                          ? const Color.fromARGB(255, 138, 113, 247)
+                          : Colors.white,
                       child: Text(
                         'Login',
                         style: TextStyle(
-                          color: _pageLogin ? Colors.white : Colors.blue,
+                          color: _pageLogin
+                              ? Colors.white
+                              : const Color.fromARGB(255, 138, 113, 247),
                         ),
                       ),
                       onPressed: () {
@@ -79,11 +83,15 @@ class _LoginPageState extends State<LoginPage> {
                       minWidth: 0,
                       highlightColor: Colors.transparent,
                       splashColor: Colors.transparent,
-                      color: _pageLogin ? Colors.white : Colors.blue,
+                      color: _pageLogin
+                          ? Colors.white
+                          : const Color.fromARGB(255, 138, 113, 247),
                       child: Text(
                         'Signup',
                         style: TextStyle(
-                          color: _pageLogin ? Colors.blue : Colors.white,
+                          color: _pageLogin
+                              ? const Color.fromARGB(255, 138, 113, 247)
+                              : Colors.white,
                         ),
                       ),
                       onPressed: () {
@@ -123,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: _login,
                             child: const Text('Login'),
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.blue,
+                              primary: const Color.fromARGB(255, 138, 113, 247),
                               textStyle: const TextStyle(
                                 color: Colors.white,
                               ),
@@ -137,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: const Text(
                               'Not signed up yet? Sign up here',
                               style: TextStyle(
-                                color: Colors.blue,
+                                color: Color.fromARGB(255, 138, 113, 247),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -191,7 +199,7 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: _signup,
                             child: const Text('SignUp'),
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.blue,
+                              primary: const Color.fromARGB(255, 138, 113, 247),
                               textStyle: const TextStyle(
                                 color: Colors.white,
                               ),
@@ -205,7 +213,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: const Text(
                               'Already have an account? Login here',
                               style: TextStyle(
-                                color: Colors.blue,
+                                color: Color.fromARGB(255, 138, 113, 247),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

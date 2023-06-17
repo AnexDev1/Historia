@@ -47,8 +47,8 @@ Widget buildDrawerHeader() {
           children: [
             CircleAvatar(
               radius: 40,
-              backgroundImage: NetworkImage(
-                'https://randomuser.me/api/portraits/women/8.jpg', // Replace with the URL of the profile picture
+              backgroundImage: AssetImage(
+                'assets/people.jpg', // Replace with the URL of the profile picture
               ),
             ),
             SizedBox(height: 8.0),
@@ -70,7 +70,7 @@ Widget buildDrawerItem(String title, IconData icon) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 8.0),
     child: ClipRRect(
-      borderRadius: BorderRadius.circular(20.0),
+      borderRadius: BorderRadius.circular(10.0),
       child: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(

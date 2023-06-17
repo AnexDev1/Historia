@@ -232,8 +232,8 @@ class _HomePageState extends State<HomePage> {
                               decoration: const BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
-                                    Color(0xFFA8C0FF),
-                                    Color(0xFF3F2B96),
+                                    Color.fromARGB(255, 181, 193, 223),
+                                    Color.fromARGB(255, 138, 113, 247),
                                   ],
                                   begin: Alignment.bottomRight,
                                   end: Alignment.bottomLeft,
