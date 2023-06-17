@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:historia/screens/about_screen.dart';
 
-Widget buildDrawer() {
+Widget buildDrawer(BuildContext context) {
   return Drawer(
     child: ListView(
       padding: EdgeInsets.zero,
@@ -9,11 +10,11 @@ Widget buildDrawer() {
         const SizedBox(height: 8.0), // Add space between header and items
         Column(
           children: [
-            buildDrawerItem('Home', Icons.home),
+            buildDrawerItem('Home', Icons.home, context),
             const SizedBox(height: 8.0), // Add space between items
-            buildDrawerItem('About', Icons.question_mark_rounded),
+            buildDrawerItem('About', Icons.question_mark_rounded, context),
             const SizedBox(height: 8.0), // Add space between items
-            buildDrawerItem('Settings', Icons.settings),
+            buildDrawerItem('Settings', Icons.settings, context),
           ],
         ),
       ],
@@ -66,7 +67,7 @@ Widget buildDrawerHeader() {
   );
 }
 
-Widget buildDrawerItem(String title, IconData icon) {
+Widget buildDrawerItem(String title, IconData icon, BuildContext context) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 8.0),
     child: ClipRRect(
@@ -109,7 +110,16 @@ Widget buildDrawerItem(String title, IconData icon) {
             color: Colors.white,
           ),
           onTap: () {
-            // Add your navigation logic here
+            if (title == 'about') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AboutScreen(),
+                ),
+              );
+            } else {
+              // Add your navigation logic for other items here
+            }
           },
         ),
       ),
