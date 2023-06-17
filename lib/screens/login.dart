@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
               Container(
                 width: double.infinity,
-                height: 300.0,
+                height: 250.0,
                 decoration: const BoxDecoration(
                   color: Colors.blue,
                   borderRadius: BorderRadius.only(
@@ -50,46 +50,50 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  MaterialButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    color: _pageLogin
-                        ? const Color.fromRGBO(143, 148, 251, 1)
-                        : Colors.transparent,
-                    child: Text(
-                      _pageLogin ? 'Login' : 'SignUp',
-                      style: TextStyle(
-                        color: _pageLogin
-                            ? Colors.white
-                            : const Color.fromRGBO(143, 148, 251, 1),
+              const SizedBox(
+                height: 15.0,
+              ),
+              Container(
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    MaterialButton(
+                      minWidth: 0,
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      color: _pageLogin ? Colors.blue : Colors.white,
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          color: _pageLogin ? Colors.white : Colors.blue,
+                        ),
                       ),
+                      onPressed: () {
+                        setState(() {
+                          _pageLogin = true;
+                        });
+                      },
                     ),
-                    onPressed: () {
-                      _togglePage(true);
-                    },
-                  ),
-                  MaterialButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    color: _pageLogin
-                        ? Colors.transparent
-                        : const Color.fromRGBO(143, 148, 251, 1),
-                    child: Text(
-                      _pageLogin ? 'SignUp' : 'Login',
-                      style: TextStyle(
-                        color: _pageLogin
-                            ? const Color.fromRGBO(143, 148, 251, 1)
-                            : Colors.white,
+                    MaterialButton(
+                      minWidth: 0,
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      color: _pageLogin ? Colors.white : Colors.blue,
+                      child: Text(
+                        'Signup',
+                        style: TextStyle(
+                          color: _pageLogin ? Colors.blue : Colors.white,
+                        ),
                       ),
+                      onPressed: () {
+                        setState(() {
+                          _pageLogin = false;
+                        });
+                      },
                     ),
-                    onPressed: () {
-                      _togglePage(false);
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
               _pageLogin
                   ? Padding(
