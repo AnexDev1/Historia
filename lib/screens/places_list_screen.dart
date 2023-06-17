@@ -56,7 +56,7 @@ class _PlacesListScreenState extends State<PlacesListScreen> {
         ),
         toolbarHeight: 80.0,
         centerTitle: true,
-        backgroundColor: Colors.green[300],
+        backgroundColor: Colors.blue[300],
       ),
       body: SafeArea(
         child: SingleChildScrollView(

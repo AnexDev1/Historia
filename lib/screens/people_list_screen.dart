@@ -57,7 +57,7 @@ class _PeopleListScreenState extends State<PeopleListScreen> {
         ),
         toolbarHeight: 80.0,
         centerTitle: true,
-        backgroundColor: Colors.orange[300],
+        backgroundColor: Colors.blue[300],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
