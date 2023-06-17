@@ -56,7 +56,7 @@ class _CitiesListScreenState extends State<CitiesListScreen> {
         ),
         toolbarHeight: 80.0,
         centerTitle: true,
-        backgroundColor: Colors.grey[600],
+        backgroundColor: Colors.blue[300],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
