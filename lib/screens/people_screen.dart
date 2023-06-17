@@ -61,12 +61,9 @@ class _PeopleScreenState extends State<PeopleScreen> {
                       right: 30.0,
                       bottom: 20.0,
                     ),
-                    child: Hero(
-                      tag: imageLink,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Image.network(imageLink), // Use NetworkImage
-                      ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.network(imageLink), // Use NetworkImage
                     ),
                   ),
                 ),

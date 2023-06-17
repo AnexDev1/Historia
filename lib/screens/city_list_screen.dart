@@ -122,15 +122,12 @@ class _CitiesListScreenState extends State<CitiesListScreen> {
                               ),
                             );
                           },
-                          child: Hero(
-                            tag: imageLink,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7.0),
-                                image: DecorationImage(
-                                  image: NetworkImage(imageLink),
-                                  fit: BoxFit.cover,
-                                ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7.0),
+                              image: DecorationImage(
+                                image: NetworkImage(imageLink),
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),

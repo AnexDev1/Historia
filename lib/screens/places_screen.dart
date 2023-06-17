@@ -50,20 +50,37 @@ class _PlacesScreenState extends State<PlacesScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      FloatingActionButton(
-                        backgroundColor: Colors.black,
-                        onPressed: () {
-                          return Navigator.pop(context);
-                        },
-                        child: const Icon(Icons.close),
+                      Container(
+                        width: 56,
+                        height: 56,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          borderRadius: BorderRadius.circular(28),
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.close,
+                              color: Colors.white,
+                              size: 24,
+                            ),
+                          ),
+                        ),
                       ),
                       const SizedBox(width: 10.0),
-                      FloatingActionButton(
-                        backgroundColor: Colors.black,
-                        onPressed: () {
-                          _shareContent(data['title'], data['description']);
-                        },
-                        child: const Icon(Icons.share),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20.0),
+                        child: FloatingActionButton(
+                          backgroundColor: Colors.black,
+                          onPressed: () {
+                            _shareContent(data['title'], data['description']);
+                          },
+                          child: const Icon(Icons.share),
+                        ),
                       ),
                     ],
                   ),
@@ -78,7 +95,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
                       bottom: 20.0,
                     ),
                     child: Hero(
-                      tag: imageLink,
+                      tag: 'heroTag',
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10.0),
                         child: Image.network(imageLink),

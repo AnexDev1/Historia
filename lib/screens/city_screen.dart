@@ -58,12 +58,9 @@ class _CityScreenState extends State<CityScreen> {
                       right: 30.0,
                       bottom: 20.0,
                     ),
-                    child: Hero(
-                      tag: imageLink,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Image.network(imageLink),
-                      ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.network(imageLink),
                     ),
                   ),
                 ),
