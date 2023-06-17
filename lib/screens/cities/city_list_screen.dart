@@ -1,33 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:historia/screens/places_screen.dart';
+import 'package:historia/screens/cities/city_screen.dart';
 
-class PlacesListScreen extends StatefulWidget {
-  const PlacesListScreen({Key? key}) : super(key: key);
+class CitiesListScreen extends StatefulWidget {
+  const CitiesListScreen({Key? key}) : super(key: key);
 
   @override
-  _PlacesListScreenState createState() => _PlacesListScreenState();
+  _CitiesListScreenState createState() => _CitiesListScreenState();
 }
 
-class _PlacesListScreenState extends State<PlacesListScreen> {
-  late Stream<QuerySnapshot> _placesStream;
-  List<DocumentSnapshot> _places = [];
-  List<DocumentSnapshot> _filteredPlaces = [];
+class _CitiesListScreenState extends State<CitiesListScreen> {
+  late Stream<QuerySnapshot> _citiesStream;
+  List<DocumentSnapshot> _cities = [];
+  List<DocumentSnapshot> _filteredCities = [];
   TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _placesStream = FirebaseFirestore.instance.collection('places').snapshots();
+    _citiesStream = FirebaseFirestore.instance.collection('cities').snapshots();
   }
 
-  void _filterPlaces(String countryTag) {
+  void _filterCities(String cityName) {
     setState(() {
-      _filteredPlaces = _places
-          .where((doc) => (doc.data() as Map<String, dynamic>)['countryTag']
+      _filteredCities = _cities
+          .where((doc) => (doc.data() as Map<String, dynamic>)['cityName']
               .toString()
               .toLowerCase()
-              .startsWith(countryTag.toLowerCase()))
+              .startsWith(cityName.toLowerCase()))
           .toList();
     });
   }
@@ -44,9 +44,9 @@ class _PlacesListScreenState extends State<PlacesListScreen> {
           ),
           child: TextFormField(
             controller: _searchController,
-            onChanged: _filterPlaces,
+            onChanged: _filterCities,
             decoration: const InputDecoration(
-              hintText: 'Search by Country',
+              hintText: 'Search by City Name',
               hintStyle: TextStyle(color: Colors.grey),
               border: InputBorder.none,
               prefixIcon: Icon(Icons.search, color: Colors.grey),
@@ -68,7 +68,7 @@ class _PlacesListScreenState extends State<PlacesListScreen> {
                   horizontal: 15.0,
                 ),
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: _placesStream,
+                  stream: _citiesStream,
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasError) {
@@ -83,11 +83,11 @@ class _PlacesListScreenState extends State<PlacesListScreen> {
                       return const Center(child: Text('No data found'));
                     }
 
-                    _places = snapshot.data!.docs;
+                    _cities = snapshot.data!.docs;
 
-                    final places = _searchController.text.isEmpty
-                        ? _places
-                        : _filteredPlaces;
+                    final cities = _searchController.text.isEmpty
+                        ? _cities
+                        : _filteredCities;
 
                     return GridView.builder(
                       shrinkWrap: true,
@@ -99,9 +99,9 @@ class _PlacesListScreenState extends State<PlacesListScreen> {
                         crossAxisSpacing: 15.0,
                         mainAxisSpacing: 15.0,
                       ),
-                      itemCount: places.length,
+                      itemCount: cities.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final doc = places[index];
+                        final doc = cities[index];
                         final data = doc.data() as Map<String, dynamic>?;
 
                         if (data == null) {
@@ -116,7 +116,7 @@ class _PlacesListScreenState extends State<PlacesListScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => PlacesScreen(
+                                builder: (context) => CityScreen(
                                   documentId: documentId,
                                 ),
                               ),

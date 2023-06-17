@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:historia/screens/people_screen.dart';
+import 'package:historia/screens/peoples/people_screen.dart';
 
 class PeopleListScreen extends StatefulWidget {
   const PeopleListScreen({Key? key}) : super(key: key);

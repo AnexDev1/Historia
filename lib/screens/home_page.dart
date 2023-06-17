@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:historia/components/drawer_widget.dart';
 import 'package:historia/components/list_box.dart';
-import 'package:historia/screens/city_list_screen.dart';
-import 'package:historia/screens/login.dart';
-import 'package:historia/screens/people_list_screen.dart';
-import 'package:historia/screens/places_list_screen.dart';
-import 'package:historia/screens/places_screen.dart';
+import 'package:historia/screens/cities/city_list_screen.dart';
+import 'package:historia/screens/auth/login.dart';
+import 'package:historia/screens/peoples/people_list_screen.dart';
+import 'package:historia/screens/places/places_list_screen.dart';
+import 'package:historia/screens/places/places_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
