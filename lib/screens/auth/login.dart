@@ -199,7 +199,8 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: _signup,
                             child: const Text('SignUp'),
                             style: ElevatedButton.styleFrom(
-                              primary: const Color.fromARGB(255, 138, 113, 247),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 138, 113, 247),
                               textStyle: const TextStyle(
                                 color: Colors.white,
                               ),
