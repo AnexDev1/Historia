@@ -181,7 +181,7 @@ class _HomePageState extends State<HomePage> {
   Widget buildPlacesList() {
     return Expanded(
       child: StreamBuilder<QuerySnapshot>(
-        stream: _firestore.collection('places').limit(2).snapshots(),
+        stream: _firestore.collection('places').limit(3).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
@@ -229,18 +229,11 @@ class _HomePageState extends State<HomePage> {
                             child: Container(
                               height: 55.0,
                               alignment: Alignment.center,
-                              decoration: const BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Color.fromARGB(255, 181, 193, 223),
-                                    Color.fromARGB(255, 138, 113, 247),
-                                  ],
-                                  begin: Alignment.bottomRight,
-                                  end: Alignment.bottomLeft,
-                                  stops: [0.0, 1.0],
-                                  tileMode: TileMode.clamp,
-                                ),
-                                borderRadius: BorderRadius.all(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage(data['imageLink']),
+                                    fit: BoxFit.cover),
+                                borderRadius: const BorderRadius.all(
                                   Radius.circular(10.0),
                                 ),
                               ),
