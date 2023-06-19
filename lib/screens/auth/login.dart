@@ -32,272 +32,294 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: themeProvider.currentThemeMode == ThemeMode.dark
           ? Colors.black
           : Colors.white,
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: themeProvider.currentThemeMode == ThemeMode.dark
-                ? Icon(Icons.wb_sunny)
-                : Icon(Icons.nightlight_round),
-            onPressed: () {
-              final newThemeMode =
-                  themeProvider.currentThemeMode == ThemeMode.dark
-                      ? ThemeMode.light
-                      : ThemeMode.dark;
-              themeProvider.setThemeMode(newThemeMode);
-            },
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Container(
-                width: double.infinity,
-                height: 220.0,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 138, 113, 247),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20.0),
-                    bottomRight: Radius.circular(20.0),
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    _pageLogin ? 'Welcome Back!' : 'Create an Account',
-                    style: TextStyle(
-                      fontSize: 34,
-                      fontWeight: FontWeight.bold,
-                      color: themeProvider.currentThemeMode == ThemeMode.dark
-                          ? Colors.black
-                          : Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-              Container(
-                width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    MaterialButton(
-                      minWidth: 0,
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                      color: _pageLogin
-                          ? const Color.fromARGB(255, 138, 113, 247)
-                          : themeProvider.currentThemeMode == ThemeMode.dark
-                              ? Colors.black
-                              : Colors.white,
-                      child: Text(
-                        'Login',
-                        style: TextStyle(
-                          color: _pageLogin
-                              ? themeProvider.currentThemeMode == ThemeMode.dark
-                                  ? Colors.black
-                                  : Colors.white
-                              : const Color.fromARGB(255, 138, 113, 247),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.bottomRight,
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 138, 113, 247),
+                        ),
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(right: 10.0, top: 15.0),
+                          child: IconButton(
+                            iconSize: 35.0,
+                            icon:
+                                themeProvider.currentThemeMode == ThemeMode.dark
+                                    ? const Icon(Icons.nightlight_round,
+                                        color: Colors.black)
+                                    : const Icon(Icons.wb_sunny,
+                                        color: Colors.white),
+                            onPressed: () {
+                              final newThemeMode =
+                                  themeProvider.currentThemeMode ==
+                                          ThemeMode.dark
+                                      ? ThemeMode.light
+                                      : ThemeMode.dark;
+                              themeProvider.setThemeMode(newThemeMode);
+                            },
+                          ),
                         ),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          _pageLogin = true;
-                        });
-                      },
-                    ),
-                    MaterialButton(
-                      minWidth: 0,
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                      color: _pageLogin
-                          ? themeProvider.currentThemeMode == ThemeMode.dark
-                              ? Colors.black
-                              : Colors.white
-                          : const Color.fromARGB(255, 138, 113, 247),
-                      child: Text(
-                        'Signup',
-                        style: TextStyle(
-                          color: _pageLogin
-                              ? const Color.fromARGB(255, 138, 113, 247)
-                              : themeProvider.currentThemeMode == ThemeMode.dark
-                                  ? Colors.black
-                                  : Colors.white,
-                        ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _pageLogin = false;
-                        });
-                      },
                     ),
                   ],
                 ),
-              ),
-              _pageLogin
-                  ? Padding(
-                      padding: const EdgeInsets.all(30.0),
-                      child: Column(
-                        children: <Widget>[
-                          TextField(
-                            style: TextStyle(
-                              color: themeProvider.currentThemeMode ==
-                                      ThemeMode.dark
-                                  ? Colors.white
-                                  : Colors.black,
-                            ),
-                            controller: _emailController,
-                            decoration: const InputDecoration(
-                              labelText: 'Email',
-                              prefixIcon: Icon(Icons.email),
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          TextField(
-                            style: TextStyle(
-                              color: themeProvider.currentThemeMode ==
-                                      ThemeMode.dark
-                                  ? Colors.white
-                                  : Colors.black,
-                            ),
-                            controller: _passwordController,
-                            decoration: const InputDecoration(
-                              labelText: 'Password',
-                              prefixIcon: Icon(Icons.lock),
-                              border: OutlineInputBorder(),
-                            ),
-                            obscureText: true,
-                          ),
-                          const SizedBox(height: 24.0),
-                          ElevatedButton(
-                            onPressed: _login,
-                            child: const Text('Login'),
-                            style: ElevatedButton.styleFrom(
-                              primary: const Color.fromARGB(255, 138, 113, 247),
-                              textStyle: TextStyle(
-                                color: themeProvider.currentThemeMode ==
-                                        ThemeMode.dark
-                                    ? Colors.black
-                                    : Colors.white,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          GestureDetector(
-                            onTap: () {
-                              _togglePage(false);
-                            },
-                            child: const Text(
-                              'Not signed up yet? Sign up here',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 138, 113, 247),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.all(30.0),
-                      child: Column(
-                        children: <Widget>[
-                          TextField(
-                            style: TextStyle(
-                              color: themeProvider.currentThemeMode ==
-                                      ThemeMode.dark
-                                  ? Colors.white
-                                  : Colors.black,
-                            ),
-                            controller: _nameController,
-                            decoration: const InputDecoration(
-                              labelText: 'Name',
-                              prefixIcon: Icon(Icons.person),
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          TextField(
-                            style: TextStyle(
-                              color: themeProvider.currentThemeMode ==
-                                      ThemeMode.dark
-                                  ? Colors.white
-                                  : Colors.black,
-                            ),
-                            controller: _emailController,
-                            decoration: const InputDecoration(
-                              labelText: 'Email',
-                              prefixIcon: Icon(Icons.email),
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          TextField(
-                            style: TextStyle(
-                              color: themeProvider.currentThemeMode ==
-                                      ThemeMode.dark
-                                  ? Colors.white
-                                  : Colors.black,
-                            ),
-                            controller: _passwordController,
-                            decoration: const InputDecoration(
-                              labelText: 'Password',
-                              prefixIcon: Icon(Icons.lock),
-                              border: OutlineInputBorder(),
-                            ),
-                            obscureText: true,
-                          ),
-                          const SizedBox(height: 16.0),
-                          TextField(
-                            style: TextStyle(
-                              color: themeProvider.currentThemeMode ==
-                                      ThemeMode.dark
-                                  ? Colors.white
-                                  : Colors.black,
-                            ),
-                            controller: _confirmPasswordController,
-                            decoration: const InputDecoration(
-                              labelText: 'Confirm Password',
-                              prefixIcon: Icon(Icons.lock),
-                              border: OutlineInputBorder(),
-                            ),
-                            obscureText: true,
-                          ),
-                          const SizedBox(height: 24.0),
-                          ElevatedButton(
-                            onPressed: _signup,
-                            child: const Text('SignUp'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 138, 113, 247),
-                              textStyle: TextStyle(
-                                color: themeProvider.currentThemeMode ==
-                                        ThemeMode.dark
-                                    ? Colors.black
-                                    : Colors.white,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          GestureDetector(
-                            onTap: () {
-                              _togglePage(true);
-                            },
-                            child: const Text(
-                              'Already have an account? Login here',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 138, 113, 247),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
+                Container(
+                  width: double.infinity,
+                  height: 170.0,
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 138, 113, 247),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20.0),
+                      bottomRight: Radius.circular(20.0),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      _pageLogin ? 'Welcome Back!' : 'Create an Account',
+                      style: TextStyle(
+                        fontSize: 34,
+                        fontWeight: FontWeight.bold,
+                        color: themeProvider.currentThemeMode == ThemeMode.dark
+                            ? Colors.black
+                            : Colors.white,
                       ),
                     ),
-            ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 15.0,
+                ),
+                Container(
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      MaterialButton(
+                        minWidth: 0,
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        color: _pageLogin
+                            ? const Color.fromARGB(255, 138, 113, 247)
+                            : themeProvider.currentThemeMode == ThemeMode.dark
+                                ? Colors.black
+                                : Colors.white,
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                            color: _pageLogin
+                                ? themeProvider.currentThemeMode ==
+                                        ThemeMode.dark
+                                    ? Colors.black
+                                    : Colors.white
+                                : const Color.fromARGB(255, 138, 113, 247),
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _pageLogin = true;
+                          });
+                        },
+                      ),
+                      MaterialButton(
+                        minWidth: 0,
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        color: _pageLogin
+                            ? themeProvider.currentThemeMode == ThemeMode.dark
+                                ? Colors.black
+                                : Colors.white
+                            : const Color.fromARGB(255, 138, 113, 247),
+                        child: Text(
+                          'Signup',
+                          style: TextStyle(
+                            color: _pageLogin
+                                ? const Color.fromARGB(255, 138, 113, 247)
+                                : themeProvider.currentThemeMode ==
+                                        ThemeMode.dark
+                                    ? Colors.black
+                                    : Colors.white,
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _pageLogin = false;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                _pageLogin
+                    ? Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: Column(
+                          children: <Widget>[
+                            TextField(
+                              style: TextStyle(
+                                color: themeProvider.currentThemeMode ==
+                                        ThemeMode.dark
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                              controller: _emailController,
+                              decoration: const InputDecoration(
+                                labelText: 'Email',
+                                prefixIcon: Icon(Icons.email),
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                            const SizedBox(height: 16.0),
+                            TextField(
+                              style: TextStyle(
+                                color: themeProvider.currentThemeMode ==
+                                        ThemeMode.dark
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                              controller: _passwordController,
+                              decoration: const InputDecoration(
+                                labelText: 'Password',
+                                prefixIcon: Icon(Icons.lock),
+                                border: OutlineInputBorder(),
+                              ),
+                              obscureText: true,
+                            ),
+                            const SizedBox(height: 24.0),
+                            ElevatedButton(
+                              onPressed: _login,
+                              child: const Text('Login'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    const Color.fromARGB(255, 138, 113, 247),
+                                textStyle: TextStyle(
+                                  color: themeProvider.currentThemeMode ==
+                                          ThemeMode.dark
+                                      ? Colors.black
+                                      : Colors.white,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 16.0),
+                            GestureDetector(
+                              onTap: () {
+                                _togglePage(false);
+                              },
+                              child: const Text(
+                                'Not signed up yet? Sign up here',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 138, 113, 247),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: Column(
+                          children: <Widget>[
+                            TextField(
+                              style: TextStyle(
+                                color: themeProvider.currentThemeMode ==
+                                        ThemeMode.dark
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                              controller: _nameController,
+                              decoration: const InputDecoration(
+                                labelText: 'Name',
+                                prefixIcon: Icon(Icons.person),
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                            const SizedBox(height: 16.0),
+                            TextField(
+                              style: TextStyle(
+                                color: themeProvider.currentThemeMode ==
+                                        ThemeMode.dark
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                              controller: _emailController,
+                              decoration: const InputDecoration(
+                                labelText: 'Email',
+                                prefixIcon: Icon(Icons.email),
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                            const SizedBox(height: 16.0),
+                            TextField(
+                              style: TextStyle(
+                                color: themeProvider.currentThemeMode ==
+                                        ThemeMode.dark
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                              controller: _passwordController,
+                              decoration: const InputDecoration(
+                                labelText: 'Password',
+                                prefixIcon: Icon(Icons.lock),
+                                border: OutlineInputBorder(),
+                              ),
+                              obscureText: true,
+                            ),
+                            const SizedBox(height: 16.0),
+                            TextField(
+                              style: TextStyle(
+                                color: themeProvider.currentThemeMode ==
+                                        ThemeMode.dark
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                              controller: _confirmPasswordController,
+                              decoration: const InputDecoration(
+                                labelText: 'Confirm Password',
+                                prefixIcon: Icon(Icons.lock),
+                                border: OutlineInputBorder(),
+                              ),
+                              obscureText: true,
+                            ),
+                            const SizedBox(height: 24.0),
+                            ElevatedButton(
+                              onPressed: _signup,
+                              child: const Text('SignUp'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    const Color.fromARGB(255, 138, 113, 247),
+                                textStyle: TextStyle(
+                                  color: themeProvider.currentThemeMode ==
+                                          ThemeMode.dark
+                                      ? Colors.black
+                                      : Colors.white,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 16.0),
+                            GestureDetector(
+                              onTap: () {
+                                _togglePage(true);
+                              },
+                              child: const Text(
+                                'Already have an account? Login here',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 138, 113, 247),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+              ],
+            ),
           ),
         ),
       ),
@@ -358,7 +380,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HomePage(),
+          builder: (context) => const HomePage(),
         ),
       );
     } catch (error) {
@@ -461,7 +483,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HomePage(),
+          builder: (context) => const HomePage(),
         ),
       );
     } catch (error) {
