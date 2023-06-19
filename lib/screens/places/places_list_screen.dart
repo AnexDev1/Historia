@@ -56,7 +56,19 @@ class _PlacesListScreenState extends State<PlacesListScreen> {
         ),
         toolbarHeight: 80.0,
         centerTitle: true,
-        backgroundColor: Colors.blue[300],
+        backgroundColor: Colors.transparent,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.fromARGB(255, 181, 193, 223),
+                Color.fromARGB(255, 138, 113, 247),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

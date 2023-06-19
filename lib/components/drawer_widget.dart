@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:historia/screens/about_screen.dart';
+import 'package:historia/screens/home_page.dart';
+import 'package:historia/screens/settings.dart';
 
 Widget buildDrawer(BuildContext context) {
   return Drawer(
@@ -117,8 +119,21 @@ Widget buildDrawerItem(String title, IconData icon, BuildContext context) {
                   builder: (context) => AboutScreen(),
                 ),
               );
-            } else {
+            } else if (title == 'Home') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomePage(),
+                ),
+              );
               // Add your navigation logic for other items here
+            } else if (title == 'Settings') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SettingScreen(),
+                ),
+              );
             }
           },
         ),

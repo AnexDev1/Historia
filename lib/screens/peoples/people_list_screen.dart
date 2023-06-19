@@ -57,7 +57,20 @@ class _PeopleListScreenState extends State<PeopleListScreen> {
         ),
         toolbarHeight: 80.0,
         centerTitle: true,
-        backgroundColor: Colors.blue[300],
+        backgroundColor:
+            Colors.transparent, // Set the background color to transparent
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.fromARGB(255, 181, 193, 223),
+                Color.fromARGB(255, 138, 113, 247),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
