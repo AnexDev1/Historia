@@ -8,7 +8,7 @@ Widget buildDrawer(BuildContext context) {
     child: ListView(
       padding: EdgeInsets.zero,
       children: <Widget>[
-        buildDrawerHeader(),
+        buildDrawerHeader(context),
         const SizedBox(height: 8.0), // Add space between header and items
         Column(
           children: [
@@ -24,7 +24,7 @@ Widget buildDrawer(BuildContext context) {
   );
 }
 
-Widget buildDrawerHeader() {
+Widget buildDrawerHeader(BuildContext context) {
   return Container(
     color: const Color(0xff757575),
     child: Container(
@@ -43,7 +43,7 @@ Widget buildDrawerHeader() {
           topRight: Radius.circular(20.0),
         ),
       ),
-      child: const DrawerHeader(
+      child: DrawerHeader(
         padding: EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +58,9 @@ Widget buildDrawerHeader() {
             Text(
               'John Doe', // Replace with the name of the user
               style: TextStyle(
-                color: Colors.white,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.black
+                    : Colors.white,
                 fontSize: 24,
               ),
             ),
@@ -70,17 +72,40 @@ Widget buildDrawerHeader() {
 }
 
 Widget buildDrawerItem(String title, IconData icon, BuildContext context) {
+  final currentThemeMode = Theme.of(context).brightness;
+
+  Color getTextColor() {
+    if (currentThemeMode == Brightness.dark) {
+      return Colors.black;
+    } else {
+      return Colors.white;
+    }
+  }
+
+  Color getIconColor() {
+    if (currentThemeMode == Brightness.dark) {
+      return Colors.black;
+    } else {
+      return Colors.white;
+    }
+  }
+
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 8.0),
     child: ClipRRect(
       borderRadius: BorderRadius.circular(10.0),
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color.fromARGB(255, 181, 193, 223),
-              Color.fromARGB(255, 138, 113, 247),
-            ],
+            colors: currentThemeMode == Brightness.dark
+                ? [
+                    Color.fromARGB(255, 138, 113, 247),
+                    Color.fromARGB(255, 181, 193, 223),
+                  ]
+                : [
+                    Color.fromARGB(255, 181, 193, 223),
+                    Color.fromARGB(255, 138, 113, 247),
+                  ],
             begin: Alignment.bottomRight,
             end: Alignment.bottomLeft,
             stops: [0.0, 1.0],
@@ -88,28 +113,27 @@ Widget buildDrawerItem(String title, IconData icon, BuildContext context) {
           ),
         ),
         child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(
-              horizontal: 24.0), // Add padding to the left and right
+          contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
           title: Row(
             children: [
               Icon(
                 icon,
-                color: Colors.white,
+                color: getIconColor(),
               ),
               const SizedBox(width: 16.0),
               Expanded(
                 child: Text(
                   title,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: getTextColor(),
                   ),
                 ),
               ),
             ],
           ),
-          trailing: const Icon(
+          trailing: Icon(
             Icons.arrow_forward,
-            color: Colors.white,
+            color: getTextColor(),
           ),
           onTap: () {
             if (title == 'About') {

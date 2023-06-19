@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:historia/theme_provider.dart';
@@ -36,6 +35,9 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final currentThemeMode =
+        Provider.of<ThemeProvider>(context).currentThemeMode;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),
@@ -52,33 +54,43 @@ class _SettingScreenState extends State<SettingScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            SizedBox(height: 16.0),
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.grey[200],
+                color: currentThemeMode == ThemeMode.dark
+                    ? Colors.grey[800]
+                    : Colors.grey[200],
                 borderRadius: BorderRadius.circular(8.0),
               ),
               padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: DropdownButton<ThemeModeOption>(
-                      value: _selectedOption,
-                      onChanged: _onOptionChanged,
-                      isExpanded: true,
-                      items: [
-                        DropdownMenuItem(
-                          value: ThemeModeOption.light,
-                          child: Text('Light'),
-                        ),
-                        DropdownMenuItem(
-                          value: ThemeModeOption.dark,
-                          child: Text('Dark'),
-                        ),
-                      ],
-                    ),
+              child: DropdownButton<ThemeModeOption>(
+                value: _selectedOption,
+                onChanged: _onOptionChanged,
+                isExpanded: true,
+                underline: SizedBox.shrink(),
+                style: TextStyle(
+                  color: currentThemeMode == ThemeMode.dark
+                      ? Colors.white
+                      : Colors.black,
+                  fontSize: 16.0,
+                ),
+                dropdownColor: currentThemeMode == ThemeMode.dark
+                    ? Colors.grey[800]
+                    : Colors.grey[200],
+                icon: Icon(Icons.arrow_drop_down,
+                    color: currentThemeMode == ThemeMode.dark
+                        ? Colors.white
+                        : Colors.black),
+                items: [
+                  DropdownMenuItem(
+                    value: ThemeModeOption.light,
+                    child: Text('Light'),
                   ),
-                  Icon(Icons.arrow_drop_down),
+                  DropdownMenuItem(
+                    value: ThemeModeOption.dark,
+                    child: Text('Dark'),
+                  ),
                 ],
               ),
             ),
