@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:historia/screens/about_screen.dart';
+import 'package:historia/screens/auth/login.dart';
 import 'package:historia/screens/home_page.dart';
 import 'package:historia/screens/settings.dart';
 
@@ -44,19 +45,21 @@ Widget buildDrawerHeader(BuildContext context) {
         ),
       ),
       child: DrawerHeader(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               radius: 40,
               backgroundImage: AssetImage(
-                'assets/people.jpg', // Replace with the URL of the profile picture
+                'assets/people.jpg',
               ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Text(
-              'John Doe', // Replace with the name of the user
+              userName.isNotEmpty
+                  ? userName
+                  : 'User', // Replace with the name of the user
               style: TextStyle(
                 color: Theme.of(context).brightness == Brightness.dark
                     ? Colors.black
@@ -99,12 +102,12 @@ Widget buildDrawerItem(String title, IconData icon, BuildContext context) {
           gradient: LinearGradient(
             colors: currentThemeMode == Brightness.dark
                 ? [
-                    Color.fromARGB(255, 138, 113, 247),
-                    Color.fromARGB(255, 181, 193, 223),
+                    const Color.fromARGB(255, 138, 113, 247),
+                    const Color.fromARGB(255, 181, 193, 223),
                   ]
                 : [
-                    Color.fromARGB(255, 181, 193, 223),
-                    Color.fromARGB(255, 138, 113, 247),
+                    const Color.fromARGB(255, 181, 193, 223),
+                    const Color.fromARGB(255, 138, 113, 247),
                   ],
             begin: Alignment.bottomRight,
             end: Alignment.bottomLeft,
@@ -140,7 +143,7 @@ Widget buildDrawerItem(String title, IconData icon, BuildContext context) {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AboutScreen(),
+                  builder: (context) => const AboutScreen(),
                 ),
               );
             } else if (title == 'Home') {
@@ -155,7 +158,7 @@ Widget buildDrawerItem(String title, IconData icon, BuildContext context) {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SettingScreen(),
+                  builder: (context) => const SettingScreen(),
                 ),
               );
             }

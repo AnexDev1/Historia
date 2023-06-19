@@ -13,7 +13,7 @@ import 'package:historia/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -35,14 +35,16 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-          child: Column(
-            children: [
-              buildTopRow(),
-              buildTitle(),
-              buildListBoxes(),
-              buildRecentlyAdded(),
-              buildPlacesList(),
-            ],
+          child: Expanded(
+            child: Column(
+              children: [
+                buildTopRow(),
+                buildTitle(),
+                buildListBoxes(),
+                buildRecentlyAdded(),
+                buildPlacesList(),
+              ],
+            ),
           ),
         ),
       ),

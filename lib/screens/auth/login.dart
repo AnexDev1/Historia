@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:historia/screens/home_page.dart';
+import 'package:historia/theme_provider.dart';
+import 'package:provider/provider.dart';
+
+String userName = 'User';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,7 +17,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  bool _pageLogin = true;
 
   void _togglePage(bool _switchme) {
     setState(() {
@@ -23,8 +26,28 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: themeProvider.currentThemeMode == ThemeMode.dark
+          ? Colors.black
+          : Colors.white,
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: themeProvider.currentThemeMode == ThemeMode.dark
+                ? Icon(Icons.wb_sunny)
+                : Icon(Icons.nightlight_round),
+            onPressed: () {
+              final newThemeMode =
+                  themeProvider.currentThemeMode == ThemeMode.dark
+                      ? ThemeMode.light
+                      : ThemeMode.dark;
+              themeProvider.setThemeMode(newThemeMode);
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Container(
           child: Column(
@@ -32,8 +55,8 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 width: double.infinity,
                 height: 220.0,
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 138, 113, 247),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 138, 113, 247),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20.0),
                     bottomRight: Radius.circular(20.0),
@@ -42,15 +65,17 @@ class _LoginPageState extends State<LoginPage> {
                 child: Center(
                   child: Text(
                     _pageLogin ? 'Welcome Back!' : 'Create an Account',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 34,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: themeProvider.currentThemeMode == ThemeMode.dark
+                          ? Colors.black
+                          : Colors.white,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 15.0,
               ),
               Container(
@@ -64,12 +89,16 @@ class _LoginPageState extends State<LoginPage> {
                       splashColor: Colors.transparent,
                       color: _pageLogin
                           ? const Color.fromARGB(255, 138, 113, 247)
-                          : Colors.white,
+                          : themeProvider.currentThemeMode == ThemeMode.dark
+                              ? Colors.black
+                              : Colors.white,
                       child: Text(
                         'Login',
                         style: TextStyle(
                           color: _pageLogin
-                              ? Colors.white
+                              ? themeProvider.currentThemeMode == ThemeMode.dark
+                                  ? Colors.black
+                                  : Colors.white
                               : const Color.fromARGB(255, 138, 113, 247),
                         ),
                       ),
@@ -84,14 +113,18 @@ class _LoginPageState extends State<LoginPage> {
                       highlightColor: Colors.transparent,
                       splashColor: Colors.transparent,
                       color: _pageLogin
-                          ? Colors.white
+                          ? themeProvider.currentThemeMode == ThemeMode.dark
+                              ? Colors.black
+                              : Colors.white
                           : const Color.fromARGB(255, 138, 113, 247),
                       child: Text(
                         'Signup',
                         style: TextStyle(
                           color: _pageLogin
                               ? const Color.fromARGB(255, 138, 113, 247)
-                              : Colors.white,
+                              : themeProvider.currentThemeMode == ThemeMode.dark
+                                  ? Colors.black
+                                  : Colors.white,
                         ),
                       ),
                       onPressed: () {
@@ -109,6 +142,12 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         children: <Widget>[
                           TextField(
+                            style: TextStyle(
+                              color: themeProvider.currentThemeMode ==
+                                      ThemeMode.dark
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
                             controller: _emailController,
                             decoration: const InputDecoration(
                               labelText: 'Email',
@@ -118,6 +157,12 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           const SizedBox(height: 16.0),
                           TextField(
+                            style: TextStyle(
+                              color: themeProvider.currentThemeMode ==
+                                      ThemeMode.dark
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
                             controller: _passwordController,
                             decoration: const InputDecoration(
                               labelText: 'Password',
@@ -132,8 +177,11 @@ class _LoginPageState extends State<LoginPage> {
                             child: const Text('Login'),
                             style: ElevatedButton.styleFrom(
                               primary: const Color.fromARGB(255, 138, 113, 247),
-                              textStyle: const TextStyle(
-                                color: Colors.white,
+                              textStyle: TextStyle(
+                                color: themeProvider.currentThemeMode ==
+                                        ThemeMode.dark
+                                    ? Colors.black
+                                    : Colors.white,
                               ),
                             ),
                           ),
@@ -158,6 +206,12 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         children: <Widget>[
                           TextField(
+                            style: TextStyle(
+                              color: themeProvider.currentThemeMode ==
+                                      ThemeMode.dark
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
                             controller: _nameController,
                             decoration: const InputDecoration(
                               labelText: 'Name',
@@ -167,6 +221,12 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           const SizedBox(height: 16.0),
                           TextField(
+                            style: TextStyle(
+                              color: themeProvider.currentThemeMode ==
+                                      ThemeMode.dark
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
                             controller: _emailController,
                             decoration: const InputDecoration(
                               labelText: 'Email',
@@ -176,6 +236,12 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           const SizedBox(height: 16.0),
                           TextField(
+                            style: TextStyle(
+                              color: themeProvider.currentThemeMode ==
+                                      ThemeMode.dark
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
                             controller: _passwordController,
                             decoration: const InputDecoration(
                               labelText: 'Password',
@@ -186,6 +252,12 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           const SizedBox(height: 16.0),
                           TextField(
+                            style: TextStyle(
+                              color: themeProvider.currentThemeMode ==
+                                      ThemeMode.dark
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
                             controller: _confirmPasswordController,
                             decoration: const InputDecoration(
                               labelText: 'Confirm Password',
@@ -201,8 +273,11 @@ class _LoginPageState extends State<LoginPage> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
                                   const Color.fromARGB(255, 138, 113, 247),
-                              textStyle: const TextStyle(
-                                color: Colors.white,
+                              textStyle: TextStyle(
+                                color: themeProvider.currentThemeMode ==
+                                        ThemeMode.dark
+                                    ? Colors.black
+                                    : Colors.white,
                               ),
                             ),
                           ),
@@ -228,6 +303,8 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  bool _pageLogin = true;
 
   Future<void> _login() async {
     try {
@@ -281,7 +358,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const HomePage(),
+          builder: (context) => HomePage(),
         ),
       );
     } catch (error) {
@@ -308,6 +385,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _signup() async {
     try {
       final String name = _nameController.text.trim();
+      userName = name;
       final String email = _emailController.text.trim();
       final String password = _passwordController.text.trim();
       final String confirmPassword = _confirmPasswordController.text.trim();
@@ -383,7 +461,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const HomePage(),
+          builder: (context) => HomePage(),
         ),
       );
     } catch (error) {
