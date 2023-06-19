@@ -35,16 +35,14 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-          child: Expanded(
-            child: Column(
-              children: [
-                buildTopRow(),
-                buildTitle(),
-                buildListBoxes(),
-                buildRecentlyAdded(),
-                buildPlacesList(),
-              ],
-            ),
+          child: Column(
+            children: [
+              buildTopRow(),
+              buildTitle(),
+              buildListBoxes(),
+              buildRecentlyAdded(),
+              buildPlacesList(),
+            ],
           ),
         ),
       ),
@@ -112,7 +110,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildTitle() {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 40.0),
+      padding: EdgeInsets.symmetric(vertical: 30.0),
       child: Text(
         'Know your Heritage',
         style: GoogleFonts.montserrat(
@@ -195,7 +193,7 @@ class _HomePageState extends State<HomePage> {
   Widget buildPlacesList() {
     return Expanded(
       child: StreamBuilder<QuerySnapshot>(
-        stream: _firestore.collection('places').limit(3).snapshots(),
+        stream: _firestore.collection('places').limit(1).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
