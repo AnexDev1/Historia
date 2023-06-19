@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:historia/screens/peoples/people_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:historia/theme_provider.dart';
 
 class PeopleListScreen extends StatefulWidget {
   const PeopleListScreen({Key? key}) : super(key: key);
@@ -14,6 +16,8 @@ class _PeopleListScreenState extends State<PeopleListScreen> {
   List<DocumentSnapshot> _people = [];
   List<DocumentSnapshot> _filteredPeople = [];
   TextEditingController _searchController = TextEditingController();
+  var currentThemeMode;
+  var textColor;
 
   @override
   void initState() {
@@ -35,11 +39,16 @@ class _PeopleListScreenState extends State<PeopleListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    currentThemeMode = Provider.of<ThemeProvider>(context).currentThemeMode;
+    textColor =
+        currentThemeMode == ThemeMode.dark ? Colors.white : Colors.black;
     return Scaffold(
       appBar: AppBar(
         title: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: currentThemeMode == ThemeMode.dark
+                ? Colors.black
+                : Colors.white,
             borderRadius: BorderRadius.circular(20.0),
             border: Border.all(color: Colors.grey),
           ),

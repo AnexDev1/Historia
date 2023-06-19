@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:historia/screens/cities/city_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:historia/theme_provider.dart';
 
 class CitiesListScreen extends StatefulWidget {
   const CitiesListScreen({Key? key}) : super(key: key);
@@ -14,6 +16,8 @@ class _CitiesListScreenState extends State<CitiesListScreen> {
   List<DocumentSnapshot> _cities = [];
   List<DocumentSnapshot> _filteredCities = [];
   TextEditingController _searchController = TextEditingController();
+  var currentThemeMode;
+  var textColor;
 
   @override
   void initState() {
@@ -34,11 +38,16 @@ class _CitiesListScreenState extends State<CitiesListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    currentThemeMode = Provider.of<ThemeProvider>(context).currentThemeMode;
+    textColor =
+        currentThemeMode == ThemeMode.dark ? Colors.white : Colors.black;
     return Scaffold(
       appBar: AppBar(
         title: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: currentThemeMode == ThemeMode.dark
+                ? Colors.black
+                : Colors.white,
             borderRadius: BorderRadius.circular(20.0),
             border: Border.all(color: Colors.grey),
           ),
@@ -51,7 +60,7 @@ class _CitiesListScreenState extends State<CitiesListScreen> {
               border: InputBorder.none,
               prefixIcon: Icon(Icons.search, color: Colors.grey),
             ),
-            style: const TextStyle(color: Colors.black, fontSize: 18.0),
+            style: TextStyle(color: textColor, fontSize: 18.0),
           ),
         ),
         toolbarHeight: 80.0,

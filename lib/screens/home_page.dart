@@ -9,6 +9,8 @@ import 'package:historia/screens/places/places_list_screen.dart';
 import 'package:historia/screens/places/places_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:historia/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,9 +22,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _firestore = FirebaseFirestore.instance;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  var currentThemeMode;
+  var textColor;
   @override
   Widget build(BuildContext context) {
+    currentThemeMode = Provider.of<ThemeProvider>(context).currentThemeMode;
+    textColor =
+        currentThemeMode == ThemeMode.dark ? Colors.white : Colors.black;
     return Scaffold(
       key: _scaffoldKey,
       drawer: buildDrawer(context),
@@ -51,20 +57,20 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {
             _scaffoldKey.currentState?.openDrawer();
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.menu,
             size: 30.0,
-            color: Colors.black,
+            color: textColor,
           ),
         ),
         IconButton(
           onPressed: () {
             _logout();
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.logout,
             size: 30.0,
-            color: Colors.black,
+            color: textColor,
           ),
         ),
       ],
@@ -111,6 +117,7 @@ class _HomePageState extends State<HomePage> {
             textStyle: TextStyle(
           fontSize: 45.0,
           fontWeight: FontWeight.w900,
+          color: textColor,
           letterSpacing: .5,
         )),
       ),
@@ -174,10 +181,10 @@ class _HomePageState extends State<HomePage> {
         'Recently Added',
         style: GoogleFonts.montserrat(
           textStyle: TextStyle(
-            fontSize: 16.0,
-            fontWeight: FontWeight.w600,
-            letterSpacing: .6,
-          ),
+              fontSize: 16.0,
+              fontWeight: FontWeight.w600,
+              letterSpacing: .6,
+              color: textColor),
         ),
       ),
     );

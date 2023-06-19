@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:historia/screens/places/places_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:historia/theme_provider.dart';
 
 class PlacesListScreen extends StatefulWidget {
   const PlacesListScreen({Key? key}) : super(key: key);
@@ -14,6 +16,8 @@ class _PlacesListScreenState extends State<PlacesListScreen> {
   List<DocumentSnapshot> _places = [];
   List<DocumentSnapshot> _filteredPlaces = [];
   TextEditingController _searchController = TextEditingController();
+  var currentThemeMode;
+  var textColor;
 
   @override
   void initState() {
@@ -34,11 +38,16 @@ class _PlacesListScreenState extends State<PlacesListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    currentThemeMode = Provider.of<ThemeProvider>(context).currentThemeMode;
+    textColor =
+        currentThemeMode == ThemeMode.dark ? Colors.white : Colors.black;
     return Scaffold(
       appBar: AppBar(
         title: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: currentThemeMode == ThemeMode.dark
+                ? Colors.black
+                : Colors.white,
             borderRadius: BorderRadius.circular(20.0),
             border: Border.all(color: Colors.grey),
           ),

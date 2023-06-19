@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
+import 'package:provider/provider.dart';
+import 'package:historia/theme_provider.dart';
 
 class PlacesScreen extends StatefulWidget {
   final String documentId;
@@ -13,7 +15,8 @@ class PlacesScreen extends StatefulWidget {
 
 class _PlacesScreenState extends State<PlacesScreen> {
   final _firestore = FirebaseFirestore.instance;
-
+  var currentThemeMode;
+  var textColor;
   void _shareContent(String title, String description) {
     final text = '$title\n\n$description';
     Share.share(text);
@@ -21,6 +24,9 @@ class _PlacesScreenState extends State<PlacesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    currentThemeMode = Provider.of<ThemeProvider>(context).currentThemeMode;
+    textColor =
+        currentThemeMode == ThemeMode.dark ? Colors.white : Colors.black;
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder<DocumentSnapshot>(
@@ -59,13 +65,15 @@ class _PlacesScreenState extends State<PlacesScreen> {
                           },
                           borderRadius: BorderRadius.circular(28),
                           child: Ink(
-                            decoration: const BoxDecoration(
-                              color: Colors.black,
+                            decoration: BoxDecoration(
+                              color: textColor,
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Icons.close,
-                              color: Colors.white,
+                              color: currentThemeMode == ThemeMode.dark
+                                  ? Colors.black
+                                  : Colors.white,
                               size: 24,
                             ),
                           ),
@@ -75,7 +83,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
                       Padding(
                         padding: const EdgeInsets.only(right: 20.0),
                         child: FloatingActionButton(
-                          backgroundColor: Colors.black,
+                          backgroundColor: textColor,
                           onPressed: () {
                             _shareContent(data['title'], data['description']);
                           },
@@ -109,12 +117,12 @@ class _PlacesScreenState extends State<PlacesScreen> {
                   child: Text(
                     data['title'],
                     textAlign: TextAlign.left,
-                    style: const TextStyle(
+                    style: TextStyle(
                       height: .9,
                       letterSpacing: .2,
                       fontSize: 40.0,
                       fontWeight: FontWeight.w800,
-                      color: Colors.black87,
+                      color: textColor,
                     ),
                   ),
                 ),
@@ -122,10 +130,8 @@ class _PlacesScreenState extends State<PlacesScreen> {
                   padding: const EdgeInsets.only(left: 30.0, right: 30.0),
                   child: Text(
                     data['description'],
-                    style: const TextStyle(
-                      height: 1.5,
-                      fontSize: 18.0,
-                    ),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 18.0, color: textColor),
                   ),
                 ),
               ],
