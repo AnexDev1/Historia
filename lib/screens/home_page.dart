@@ -8,6 +8,7 @@ import 'package:historia/screens/peoples/people_list_screen.dart';
 import 'package:historia/screens/places/places_list_screen.dart';
 import 'package:historia/screens/places/places_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -102,15 +103,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildTitle() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 20.0),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 40.0),
       child: Text(
         'Know your Heritage',
-        style: TextStyle(
+        style: GoogleFonts.montserrat(
+            textStyle: TextStyle(
           fontSize: 45.0,
           fontWeight: FontWeight.w900,
           letterSpacing: .5,
-        ),
+        )),
       ),
     );
   }
@@ -166,13 +168,16 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildRecentlyAdded() {
     return Container(
-      padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
+      padding: const EdgeInsets.only(top: 40.0, bottom: 10.0),
       alignment: Alignment.centerLeft,
-      child: const Text(
+      child: Text(
         'Recently Added',
-        style: TextStyle(
-          fontSize: 18.0,
-          fontWeight: FontWeight.w600,
+        style: GoogleFonts.montserrat(
+          textStyle: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.w600,
+            letterSpacing: .6,
+          ),
         ),
       ),
     );
@@ -245,10 +250,20 @@ class _HomePageState extends State<HomePage> {
                                     Text(
                                       data['title'],
                                       textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
+                                      style: GoogleFonts.montserrat(
+                                        textStyle: TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.white,
+                                          shadows: [
+                                            Shadow(
+                                              color:
+                                                  Colors.black.withOpacity(0.5),
+                                              blurRadius: 3,
+                                              offset: Offset(2, 2),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                     const Icon(

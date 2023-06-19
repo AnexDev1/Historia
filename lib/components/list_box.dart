@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ListBox extends StatelessWidget {
   const ListBox({
@@ -41,10 +42,19 @@ class ListBox extends StatelessWidget {
           child: Center(
             child: Text(
               text,
-              style: const TextStyle(
-                fontSize: 30.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+              style: GoogleFonts.montserrat(
+                textStyle: TextStyle(
+                  fontSize: 30.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  shadows: [
+                    Shadow(
+                      color: Colors.black.withOpacity(0.5),
+                      blurRadius: 3,
+                      offset: Offset(2, 2),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
