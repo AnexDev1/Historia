@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:historia/components/drawer_widget.dart';
 import 'package:historia/components/list_box.dart';
-import 'package:historia/screens/cities/city_list_screen.dart';
 import 'package:historia/screens/auth/login.dart';
-import 'package:historia/screens/peoples/people_list_screen.dart';
-import 'package:historia/screens/places/places_list_screen.dart';
+import 'package:historia/screens/cities/city_screen.dart';
 import 'package:historia/screens/places/places_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:historia/theme_provider.dart';
 import 'package:provider/provider.dart';
+
+import 'peoples/people_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
       Navigator.popUntil(context, (route) => route.isFirst);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
+        MaterialPageRoute(builder: (context) => const LoginPage()),
       );
     } catch (error) {
       showDialog(
@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildTitle() {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 30.0),
+      padding: const EdgeInsets.symmetric(vertical: 30.0),
       child: Text(
         'Know your Heritage',
         style: GoogleFonts.montserrat(
@@ -131,13 +131,13 @@ class _HomePageState extends State<HomePage> {
         scrollDirection: Axis.horizontal,
         children: [
           ListBox(
-            imagePath: 'assets/palce.jpg',
+            imagePath: 'assets/place.jpg',
             text: 'Places',
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const PlacesListScreen(),
+                  builder: (context) => const PlacesScreen(),
                 ),
               );
             },
@@ -150,7 +150,8 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const PeopleListScreen(),
+                  // builder: (context) => const PeopleScreen(),
+                  builder: (context) => PeopleScreen(),
                 ),
               );
             },
@@ -163,7 +164,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const CitiesListScreen(),
+                  builder: (context) => CityScreen(),
                 ),
               );
             },
@@ -219,9 +220,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PlacesScreen(
-                        documentId: doc.id,
-                      ),
+                      builder: (context) => PlacesScreen(),
                     ),
                   );
                 },
@@ -267,7 +266,7 @@ class _HomePageState extends State<HomePage> {
                                               color:
                                                   Colors.black.withOpacity(0.5),
                                               blurRadius: 3,
-                                              offset: Offset(2, 2),
+                                              offset: const Offset(2, 2),
                                             ),
                                           ],
                                         ),
