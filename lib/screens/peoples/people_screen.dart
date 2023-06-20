@@ -45,112 +45,73 @@ class _PeopleScreenState extends State<PeopleScreen> {
               return const Center(child: Text('No data found'));
             }
 
-            return PageView.builder(
-              itemCount: data.length,
-              controller: PageController(initialPage: currentPage),
-              onPageChanged: (int index) {
-                setState(() {
-                  currentPage = index;
-                });
-              },
-              itemBuilder: (BuildContext context, int index) {
-                final docData = data[index].data() as Map<String, dynamic>;
-                final imageLink = docData['imageLink'];
-                return SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.only(top: 20.0, left: 15.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: 56,
-                              height: 56,
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                borderRadius: BorderRadius.circular(28),
-                                child: Ink(
-                                  decoration: BoxDecoration(
-                                    color: textColor,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    Icons.close,
-                                    color: currentThemeMode == ThemeMode.dark
-                                        ? Colors.black
-                                        : Colors.white,
-                                    size: 24,
-                                  ),
-                                ),
+            return Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 300.0,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 30.0,
+                              left: 15.0,
+                              right: 30.0,
+                              bottom: 20.0,
+                            ),
+                            child: Hero(
+                              tag: 'heroTag',
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Image.network(
+                                    data[currentPage]['imageLink']),
                               ),
                             ),
-                            const SizedBox(width: 10.0),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 20.0),
-                              child: FloatingActionButton(
-                                backgroundColor: textColor,
-                                onPressed: () {
-                                  _shareContent(
-                                      docData['title'], docData['description']);
-                                },
-                                child: const Icon(Icons.share),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 300.0,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            top: 30.0,
-                            left: 15.0,
-                            right: 30.0,
-                            bottom: 20.0,
                           ),
-                          child: Hero(
-                            tag: 'heroTag',
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10.0),
-                              child: Image.network(imageLink),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 20.0, horizontal: 30.0),
+                          child: Text(
+                            data[currentPage]['title'],
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              height: .9,
+                              letterSpacing: .2,
+                              fontSize: 40.0,
+                              fontWeight: FontWeight.w800,
+                              color: textColor,
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 20.0, horizontal: 30.0),
-                        child: Text(
-                          docData['title'],
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            height: .9,
-                            letterSpacing: .2,
-                            fontSize: 40.0,
-                            fontWeight: FontWeight.w800,
-                            color: textColor,
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 30.0, right: 30.0),
+                          child: Text(
+                            data[currentPage]['description'],
+                            style: TextStyle(
+                                height: 1.5, fontSize: 18.0, color: textColor),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 30.0, right: 30.0),
-                        child: Text(
-                          docData['description'],
-                          style: TextStyle(
-                            height: 1.5,
-                            fontSize: 18.0,
-                            color: textColor,
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                );
-              },
+                ),
+                
+                Container(
+                  padding: EdgeInsets.only(right: 20.0, bottom: 20.0),
+                  alignment: Alignment.bottomRight,
+                  child: FloatingActionButton(
+                    backgroundColor: textColor,
+                    onPressed: () {
+                      _shareContent(data[currentPage]['title'],
+                          data[currentPage]['description']);
+                    },
+                    child: const Icon(Icons.share),
+                  ),
+                ),
+              ],
             );
           },
         ),

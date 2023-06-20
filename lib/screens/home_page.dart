@@ -194,7 +194,7 @@ class _HomePageState extends State<HomePage> {
   Widget buildPlacesList() {
     return Expanded(
       child: StreamBuilder<QuerySnapshot>(
-        stream: _firestore.collection('places').limit(1).snapshots(),
+        stream: _firestore.collection('peoples').limit(2).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
