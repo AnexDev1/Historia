@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:provider/provider.dart';
-import 'package:historia/theme_provider.dart';
+import 'package:historia/provider/theme_provider.dart';
 
 class PeopleScreen extends StatefulWidget {
   @override

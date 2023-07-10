@@ -6,7 +6,7 @@ import 'package:historia/screens/home_page.dart';
 import 'package:historia/screens/auth/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'theme_provider.dart';
+import 'provider/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:historia/theme_provider.dart';
+import 'package:historia/provider/theme_provider.dart';
 
 enum ThemeModeOption {
   light,

@@ -72,7 +72,7 @@ class AboutScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 25.0),
                     child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+                      'Historia is an educational app that contains various types of information. the information is updated frequently and you can always visit the app to get new contents to educate your self with famous archeological places and historical as well as modern places, objects and peoples in the world. The app is built with Flutter and you can get the code from my github. Feel free to contact me for more suggestions, errors, fixes or updated that i should make to the app. ',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,

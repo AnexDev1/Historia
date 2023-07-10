@@ -7,7 +7,7 @@ import 'package:historia/screens/cities/city_screen.dart';
 import 'package:historia/screens/places/places_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:historia/theme_provider.dart';
+import 'package:historia/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'peoples/people_screen.dart';
