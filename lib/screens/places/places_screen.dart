@@ -13,8 +13,8 @@ class PlacesScreen extends StatefulWidget {
 
 class _PlacesScreenState extends State<PlacesScreen> {
   final _firestore = FirebaseFirestore.instance;
-  List<DocumentSnapshot> _places = []; // Initialize with an empty list
-  int _currentPage = 0; // Initialize with 0
+  List<DocumentSnapshot> _places = [];
+  int _currentPage = 0;
   var currentThemeMode;
   var textColor;
 
@@ -43,24 +43,25 @@ class _PlacesScreenState extends State<PlacesScreen> {
         currentThemeMode == ThemeMode.dark ? Colors.white : Colors.black;
     return Scaffold(
       body: SafeArea(
-        child: _places.isEmpty // Check if _places is empty
+        child: _places.isEmpty
             ? const Center(child: CircularProgressIndicator())
-            : PageView.builder(
-                itemCount: _places.length,
-                controller: PageController(initialPage: _currentPage),
-                onPageChanged: (int page) {
-                  setState(() {
-                    _currentPage = page;
-                  });
-                },
-                itemBuilder: (BuildContext context, int index) {
-                  final data = _places[index].data() as Map<String, dynamic>;
-                  final imageLink = data['imageLink'];
+            : Column(
+                children: [
+                  Expanded(
+                    child: PageView.builder(
+                      itemCount: _places.length,
+                      controller: PageController(initialPage: _currentPage),
+                      onPageChanged: (int page) {
+                        setState(() {
+                          _currentPage = page;
+                        });
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        final data =
+                            _places[index].data() as Map<String, dynamic>;
+                        final imageLink = data['imageLink'];
 
-                  return Column(
-                    children: [
-                      Expanded(
-                        child: SingleChildScrollView(
+                        return SingleChildScrollView(
                           child: Column(
                             children: [
                               SizedBox(
@@ -109,22 +110,60 @@ class _PlacesScreenState extends State<PlacesScreen> {
                               ),
                             ],
                           ),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(right: 20.0, bottom: 20.0),
-                        alignment: Alignment.centerRight,
-                        child: FloatingActionButton(
-                          backgroundColor: textColor,
-                          onPressed: () {
-                            _shareContent(data['title'], data['description']);
-                          },
-                          child: const Icon(Icons.share),
-                        ),
-                      ),
-                    ],
-                  );
-                },
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        for (int i = 0; i < _places.length; i++)
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _currentPage = i;
+                              });
+                            },
+                            child: Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 5.0),
+                              width: 30.0,
+                              height: 30.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color:
+                                    i == _currentPage ? textColor : Colors.grey,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '${i + 1}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(right: 20.0, bottom: 20.0),
+                    alignment: Alignment.centerRight,
+                    child: FloatingActionButton(
+                      backgroundColor: textColor,
+                      onPressed: () {
+                        final data = _places[_currentPage].data()
+                            as Map<String, dynamic>;
+                        _shareContent(data['title'], data['description']);
+                      },
+                      child: const Icon(Icons.share),
+                    ),
+                  ),
+                ],
               ),
       ),
     );

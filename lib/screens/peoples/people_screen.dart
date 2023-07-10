@@ -11,11 +11,11 @@ class PeopleScreen extends StatefulWidget {
 
 class _PeopleScreenState extends State<PeopleScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  List<DocumentSnapshot> _peoples = []; // Initialize with an empty list
-
+  List<DocumentSnapshot> _peoples = [];
   var currentThemeMode;
   var textColor;
   int _currentPage = 0;
+  PageController _pageController = PageController(initialPage: 0);
 
   @override
   void initState() {
@@ -42,23 +42,24 @@ class _PeopleScreenState extends State<PeopleScreen> {
         currentThemeMode == ThemeMode.dark ? Colors.white : Colors.black;
     return Scaffold(
       body: SafeArea(
-        child: _peoples.isEmpty // Check if _peoples is empty
+        child: _peoples.isEmpty
             ? const Center(child: CircularProgressIndicator())
-            : PageView.builder(
-                itemCount: _peoples.length,
-                controller: PageController(initialPage: _currentPage),
-                onPageChanged: (int page) {
-                  setState(() {
-                    _currentPage = page;
-                  });
-                },
-                itemBuilder: (BuildContext context, int index) {
-                  final data = _peoples[index].data() as Map<String, dynamic>;
-                  final imageLink = data['imageLink'];
-                  return Column(
-                    children: [
-                      Expanded(
-                        child: SingleChildScrollView(
+            : Column(
+                children: [
+                  Expanded(
+                    child: PageView.builder(
+                      itemCount: _peoples.length,
+                      controller: _pageController,
+                      onPageChanged: (int page) {
+                        setState(() {
+                          _currentPage = page;
+                        });
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        final data =
+                            _peoples[index].data() as Map<String, dynamic>;
+                        final imageLink = data['imageLink'];
+                        return SingleChildScrollView(
                           child: Column(
                             children: [
                               SizedBox(
@@ -107,22 +108,62 @@ class _PeopleScreenState extends State<PeopleScreen> {
                               ),
                             ],
                           ),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(right: 20.0, bottom: 20.0),
-                        alignment: Alignment.bottomRight,
-                        child: FloatingActionButton(
-                          backgroundColor: textColor,
-                          onPressed: () {
-                            _shareContent(data['title'], data['description']);
-                          },
-                          child: const Icon(Icons.share),
-                        ),
-                      ),
-                    ],
-                  );
-                },
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        for (int i = 0; i < _peoples.length; i++)
+                          GestureDetector(
+                            onTap: () {
+                              _pageController.animateToPage(
+                                i,
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.easeInOut,
+                              );
+                            },
+                            child: Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 5.0),
+                              width: 30.0,
+                              height: 30.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color:
+                                    i == _currentPage ? textColor : Colors.grey,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '${i + 1}',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(right: 20.0, bottom: 20.0),
+                    alignment: Alignment.bottomRight,
+                    child: FloatingActionButton(
+                      backgroundColor: textColor,
+                      onPressed: () {
+                        final data = _peoples[_currentPage].data()
+                            as Map<String, dynamic>;
+                        _shareContent(data['title'], data['description']);
+                      },
+                      child: const Icon(Icons.share),
+                    ),
+                  ),
+                ],
               ),
       ),
     );
