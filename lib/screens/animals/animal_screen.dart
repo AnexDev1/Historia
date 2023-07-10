@@ -24,7 +24,7 @@ class _CityScreenState extends State<CityScreen> {
   }
 
   Future<void> _fetchCities() async {
-    final snapshot = await _firestore.collection('cities').get();
+    final snapshot = await _firestore.collection('animals').get();
     setState(() {
       _cities = snapshot.docs;
     });

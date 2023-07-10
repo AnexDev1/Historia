@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:historia/components/drawer_widget.dart';
 import 'package:historia/components/list_box.dart';
-import 'package:historia/components/recent_lists.dart';
 import 'package:historia/screens/auth/login.dart';
-import 'package:historia/screens/cities/city_screen.dart';
+import 'package:historia/screens/animals/animal_screen.dart';
 import 'package:historia/screens/places/places_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -40,8 +39,6 @@ class _HomePageState extends State<HomePage> {
               buildTopRow(),
               buildTitle(),
               buildListBoxes(),
-              buildRecentlyAdded(),
-              BuildPlacesList(),
             ],
           ),
         ),
@@ -126,9 +123,13 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildListBoxes() {
     return SizedBox(
-      height: 220.0,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
+      height: 420.0,
+      child: GridView.count(
+        crossAxisCount: 2, // Number of columns in the grid
+        scrollDirection: Axis.vertical,
+        childAspectRatio: 2 / 3, // Width to height ratio for each grid item
+        crossAxisSpacing: 10.0,
+        mainAxisSpacing: 15.0, // Gap between columns
         children: [
           ListBox(
             imagePath: 'assets/place.jpg',
@@ -142,7 +143,6 @@ class _HomePageState extends State<HomePage> {
               );
             },
           ),
-          const SizedBox(width: 10.0),
           ListBox(
             imagePath: 'assets/people.jpg',
             text: 'People',
@@ -155,10 +155,9 @@ class _HomePageState extends State<HomePage> {
               );
             },
           ),
-          const SizedBox(width: 10.0),
           ListBox(
-            imagePath: 'assets/city.jpg',
-            text: 'Cities',
+            imagePath: 'assets/animal.jpg',
+            text: 'Animals',
             onTap: () {
               Navigator.push(
                 context,
@@ -169,23 +168,6 @@ class _HomePageState extends State<HomePage> {
             },
           ),
         ],
-      ),
-    );
-  }
-
-  Widget buildRecentlyAdded() {
-    return Container(
-      padding: const EdgeInsets.only(top: 40.0, bottom: 10.0),
-      alignment: Alignment.centerLeft,
-      child: Text(
-        'Recently Added',
-        style: GoogleFonts.montserrat(
-          textStyle: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w600,
-              letterSpacing: .6,
-              color: textColor),
-        ),
       ),
     );
   }
