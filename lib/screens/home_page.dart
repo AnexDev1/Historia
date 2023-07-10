@@ -12,14 +12,13 @@ import 'package:provider/provider.dart';
 import 'peoples/people_screen.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  // final _firestore = FirebaseFirestore.instance;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var currentThemeMode;
   var textColor;
@@ -31,46 +30,49 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       key: _scaffoldKey,
       drawer: buildDrawer(context),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-          child: Column(
-            children: [
-              buildTopRow(),
-              buildTitle(),
-              buildListBoxes(),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor:
+                Colors.transparent, // Set the desired background color
+            pinned: true,
+            leading: IconButton(
+              onPressed: () {
+                _scaffoldKey.currentState?.openDrawer();
+              },
+              icon: Icon(
+                Icons.menu,
+                size: 30.0,
+                color: textColor,
+              ),
+            ),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  _logout();
+                },
+                icon: Icon(
+                  Icons.logout,
+                  size: 30.0,
+                  color: textColor,
+                ),
+              ),
             ],
           ),
-        ),
+          SliverFillRemaining(
+            child: SingleChildScrollView(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+              child: Column(
+                children: [
+                  buildTitle(),
+                  buildListBoxes(),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
-    );
-  }
-
-  Widget buildTopRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        IconButton(
-          onPressed: () {
-            _scaffoldKey.currentState?.openDrawer();
-          },
-          icon: Icon(
-            Icons.menu,
-            size: 30.0,
-            color: textColor,
-          ),
-        ),
-        IconButton(
-          onPressed: () {
-            _logout();
-          },
-          icon: Icon(
-            Icons.logout,
-            size: 30.0,
-            color: textColor,
-          ),
-        ),
-      ],
     );
   }
 
@@ -107,12 +109,12 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildTitle() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30.0),
+      padding: const EdgeInsets.symmetric(vertical: 15.0),
       child: Text(
         'Know your Heritage',
         style: GoogleFonts.montserrat(
             textStyle: TextStyle(
-          fontSize: 45.0,
+          fontSize: 50.0,
           fontWeight: FontWeight.w900,
           color: textColor,
           letterSpacing: .5,
@@ -122,77 +124,75 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildListBoxes() {
-    return SizedBox(
-      height: 532.0,
-      child: GridView.count(
-        crossAxisCount: 2, // Number of columns in the grid
-        scrollDirection: Axis.vertical,
-        childAspectRatio: 2 / 3, // Width to height ratio for each grid item
-        crossAxisSpacing: 15.0,
-        mainAxisSpacing: 10.0, // Gap between columns
-        children: [
-          ListBox(
-            imagePath: 'assets/place.jpg',
-            text: 'Places',
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const PlacesScreen(),
-                ),
-              );
-            },
-          ),
-          ListBox(
-            imagePath: 'assets/people.jpg',
-            text: 'People',
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PeopleScreen(),
-                ),
-              );
-            },
-          ),
-          ListBox(
-            imagePath: 'assets/animal.jpg',
-            text: 'Animals',
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CityScreen(),
-                ),
-              );
-            },
-          ),
-          ListBox(
-            imagePath: 'assets/food.jpg',
-            text: 'Foods',
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CityScreen(),
-                ),
-              );
-            },
-          ),
-          ListBox(
-            imagePath: 'assets/culture.jpg',
-            text: 'Cultures',
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CityScreen(),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+    return GridView.count(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      crossAxisCount: 2,
+      childAspectRatio: 2 / 3,
+      crossAxisSpacing: 15.0,
+      mainAxisSpacing: 10.0,
+      children: [
+        ListBox(
+          imagePath: 'assets/place.jpg',
+          text: 'Places',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PlacesScreen(),
+              ),
+            );
+          },
+        ),
+        ListBox(
+          imagePath: 'assets/people.jpg',
+          text: 'People',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PeopleScreen(),
+              ),
+            );
+          },
+        ),
+        ListBox(
+          imagePath: 'assets/animal.jpg',
+          text: 'Animals',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PeopleScreen(),
+              ),
+            );
+          },
+        ),
+        ListBox(
+          imagePath: 'assets/food.jpg',
+          text: 'Foods',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PeopleScreen(),
+              ),
+            );
+          },
+        ),
+        ListBox(
+          imagePath: 'assets/culture.jpg',
+          text: 'Cultures',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PeopleScreen(),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }
