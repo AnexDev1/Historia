@@ -123,13 +123,13 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildListBoxes() {
     return SizedBox(
-      height: 420.0,
+      height: 532.0,
       child: GridView.count(
         crossAxisCount: 2, // Number of columns in the grid
         scrollDirection: Axis.vertical,
         childAspectRatio: 2 / 3, // Width to height ratio for each grid item
-        crossAxisSpacing: 10.0,
-        mainAxisSpacing: 15.0, // Gap between columns
+        crossAxisSpacing: 15.0,
+        mainAxisSpacing: 10.0, // Gap between columns
         children: [
           ListBox(
             imagePath: 'assets/place.jpg',
@@ -158,6 +158,30 @@ class _HomePageState extends State<HomePage> {
           ListBox(
             imagePath: 'assets/animal.jpg',
             text: 'Animals',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CityScreen(),
+                ),
+              );
+            },
+          ),
+          ListBox(
+            imagePath: 'assets/food.jpg',
+            text: 'Foods',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CityScreen(),
+                ),
+              );
+            },
+          ),
+          ListBox(
+            imagePath: 'assets/culture.jpg',
+            text: 'Cultures',
             onTap: () {
               Navigator.push(
                 context,
