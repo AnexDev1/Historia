@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:historia/components/drawer_widget.dart';
 import 'package:historia/components/list_box.dart';
 import 'package:historia/screens/auth/login.dart';
-import 'package:historia/screens/animals/animal_screen.dart';
 import 'package:historia/screens/places/places_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,60 +19,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  var currentThemeMode;
-  var textColor;
+  late ThemeMode currentThemeMode;
+  late Color textColor;
+
   @override
-  Widget build(BuildContext context) {
-    currentThemeMode = Provider.of<ThemeProvider>(context).currentThemeMode;
+  void initState() {
+    super.initState();
+    currentThemeMode =
+        Provider.of<ThemeProvider>(context, listen: false).currentThemeMode;
     textColor =
         currentThemeMode == ThemeMode.dark ? Colors.white : Colors.black;
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: buildDrawer(context),
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor:
-                Colors.transparent, // Set the desired background color
-            pinned: true,
-            leading: IconButton(
-              onPressed: () {
-                _scaffoldKey.currentState?.openDrawer();
-              },
-              icon: Icon(
-                Icons.menu,
-                size: 30.0,
-                color: textColor,
-              ),
-            ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  _logout();
-                },
-                icon: Icon(
-                  Icons.logout,
-                  size: 30.0,
-                  color: textColor,
-                ),
-              ),
-            ],
-          ),
-          SliverFillRemaining(
-            child: SingleChildScrollView(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-              child: Column(
-                children: [
-                  buildTitle(),
-                  buildListBoxes(),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   void _logout() async {
@@ -113,12 +68,13 @@ class _HomePageState extends State<HomePage> {
       child: Text(
         'Know your Heritage',
         style: GoogleFonts.montserrat(
-            textStyle: TextStyle(
-          fontSize: 50.0,
-          fontWeight: FontWeight.w900,
-          color: textColor,
-          letterSpacing: .5,
-        )),
+          textStyle: TextStyle(
+            fontSize: 50.0,
+            fontWeight: FontWeight.w900,
+            color: textColor,
+            letterSpacing: .5,
+          ),
+        ),
       ),
     );
   }
@@ -126,7 +82,7 @@ class _HomePageState extends State<HomePage> {
   Widget buildListBoxes() {
     return GridView.count(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
       childAspectRatio: 2 / 3,
       crossAxisSpacing: 15.0,
@@ -193,6 +149,57 @@ class _HomePageState extends State<HomePage> {
           },
         ),
       ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: _scaffoldKey,
+      drawer: AppDrawer(
+        context: context,
+        userName: userName,
+      ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Colors.transparent,
+            pinned: true,
+            leading: IconButton(
+              onPressed: () {
+                _scaffoldKey.currentState?.openDrawer();
+              },
+              icon: Icon(
+                Icons.menu,
+                size: 30.0,
+                color: textColor,
+              ),
+            ),
+            actions: [
+              IconButton(
+                onPressed: _logout,
+                icon: Icon(
+                  Icons.logout,
+                  size: 30.0,
+                  color: textColor,
+                ),
+              ),
+            ],
+          ),
+          SliverFillRemaining(
+            child: SingleChildScrollView(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+              child: Column(
+                children: [
+                  buildTitle(),
+                  buildListBoxes(),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

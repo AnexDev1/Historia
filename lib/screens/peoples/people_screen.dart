@@ -11,23 +11,19 @@ class PeopleScreen extends StatefulWidget {
 
 class _PeopleScreenState extends State<PeopleScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  List<DocumentSnapshot> _peoples = [];
-  var currentThemeMode;
-  var textColor;
+  late Future<List<QueryDocumentSnapshot>> _peoplesFuture;
   int _currentPage = 0;
-  PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController(initialPage: 0);
 
   @override
   void initState() {
     super.initState();
-    _fetchPeoples();
+    _peoplesFuture = _fetchPeoples();
   }
 
-  Future<void> _fetchPeoples() async {
+  Future<List<QueryDocumentSnapshot>> _fetchPeoples() async {
     final snapshot = await _firestore.collection('peoples').get();
-    setState(() {
-      _peoples = snapshot.docs;
-    });
+    return snapshot.docs;
   }
 
   void _shareContent(String title, String description) {
@@ -37,18 +33,31 @@ class _PeopleScreenState extends State<PeopleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    currentThemeMode = Provider.of<ThemeProvider>(context).currentThemeMode;
-    textColor =
+    final currentThemeMode =
+        Provider.of<ThemeProvider>(context).currentThemeMode;
+    final textColor =
         currentThemeMode == ThemeMode.dark ? Colors.white : Colors.black;
+
     return Scaffold(
       body: SafeArea(
-        child: _peoples.isEmpty
-            ? const Center(child: CircularProgressIndicator())
-            : Column(
+        child: FutureBuilder<List<QueryDocumentSnapshot>>(
+          future: _peoplesFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return const Center(child: Text('Error occurred'));
+            } else {
+              final peoples = snapshot.data!;
+              final people = peoples[_currentPage];
+              final data = people.data() as Map<String, dynamic>;
+              // final imageLink = data['imageLink'];
+
+              return Column(
                 children: [
                   Expanded(
                     child: PageView.builder(
-                      itemCount: _peoples.length,
+                      itemCount: peoples.length,
                       controller: _pageController,
                       onPageChanged: (int page) {
                         setState(() {
@@ -56,9 +65,10 @@ class _PeopleScreenState extends State<PeopleScreen> {
                         });
                       },
                       itemBuilder: (BuildContext context, int index) {
-                        final data =
-                            _peoples[index].data() as Map<String, dynamic>;
+                        final people = peoples[index];
+                        final data = people.data() as Map<String, dynamic>;
                         final imageLink = data['imageLink'];
+
                         return SingleChildScrollView(
                           child: Column(
                             children: [
@@ -117,7 +127,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        for (int i = 0; i < _peoples.length; i++)
+                        for (int i = 0; i < peoples.length; i++)
                           GestureDetector(
                             onTap: () {
                               _pageController.animateToPage(
@@ -156,7 +166,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
                     child: FloatingActionButton(
                       backgroundColor: textColor,
                       onPressed: () {
-                        final data = _peoples[_currentPage].data()
+                        final data = peoples[_currentPage].data()
                             as Map<String, dynamic>;
                         _shareContent(data['title'], data['description']);
                       },
@@ -164,7 +174,10 @@ class _PeopleScreenState extends State<PeopleScreen> {
                     ),
                   ),
                 ],
-              ),
+              );
+            }
+          },
+        ),
       ),
     );
   }

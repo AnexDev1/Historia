@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:historia/components/drawer_widget.dart';
+import 'package:historia/screens/auth/login.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -7,7 +8,10 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: buildDrawer(context),
+      drawer: AppDrawer(
+        context: context,
+        userName: userName,
+      ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(

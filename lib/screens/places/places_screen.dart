@@ -13,22 +13,18 @@ class PlacesScreen extends StatefulWidget {
 
 class _PlacesScreenState extends State<PlacesScreen> {
   final _firestore = FirebaseFirestore.instance;
-  List<DocumentSnapshot> _places = [];
+  late Future<List<QueryDocumentSnapshot>> _placesFuture;
   int _currentPage = 0;
-  var currentThemeMode;
-  var textColor;
 
   @override
   void initState() {
     super.initState();
-    _fetchPlaces();
+    _placesFuture = _fetchPlaces();
   }
 
-  Future<void> _fetchPlaces() async {
+  Future<List<QueryDocumentSnapshot>> _fetchPlaces() async {
     final snapshot = await _firestore.collection('places').get();
-    setState(() {
-      _places = snapshot.docs;
-    });
+    return snapshot.docs;
   }
 
   void _shareContent(String title, String description) {
@@ -38,18 +34,31 @@ class _PlacesScreenState extends State<PlacesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    currentThemeMode = Provider.of<ThemeProvider>(context).currentThemeMode;
-    textColor =
+    final currentThemeMode =
+        Provider.of<ThemeProvider>(context).currentThemeMode;
+    final textColor =
         currentThemeMode == ThemeMode.dark ? Colors.white : Colors.black;
+
     return Scaffold(
       body: SafeArea(
-        child: _places.isEmpty
-            ? const Center(child: CircularProgressIndicator())
-            : Column(
+        child: FutureBuilder<List<QueryDocumentSnapshot>>(
+          future: _placesFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return const Center(child: Text('Error occurred'));
+            } else {
+              final places = snapshot.data!;
+              final place = places[_currentPage];
+              final data = place.data() as Map<String, dynamic>;
+              final imageLink = data['imageLink'];
+
+              return Column(
                 children: [
                   Expanded(
                     child: PageView.builder(
-                      itemCount: _places.length,
+                      itemCount: places.length,
                       controller: PageController(initialPage: _currentPage),
                       onPageChanged: (int page) {
                         setState(() {
@@ -57,8 +66,8 @@ class _PlacesScreenState extends State<PlacesScreen> {
                         });
                       },
                       itemBuilder: (BuildContext context, int index) {
-                        final data =
-                            _places[index].data() as Map<String, dynamic>;
+                        final place = places[index];
+                        final data = place.data() as Map<String, dynamic>;
                         final imageLink = data['imageLink'];
 
                         return SingleChildScrollView(
@@ -119,7 +128,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        for (int i = 0; i < _places.length; i++)
+                        for (int i = 0; i < places.length; i++)
                           GestureDetector(
                             onTap: () {
                               setState(() {
@@ -139,7 +148,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
                               child: Center(
                                 child: Text(
                                   '${i + 1}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -151,20 +160,23 @@ class _PlacesScreenState extends State<PlacesScreen> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(right: 20.0, bottom: 20.0),
+                    padding: const EdgeInsets.only(right: 20.0, bottom: 20.0),
                     alignment: Alignment.centerRight,
                     child: FloatingActionButton(
                       backgroundColor: textColor,
                       onPressed: () {
-                        final data = _places[_currentPage].data()
-                            as Map<String, dynamic>;
+                        final data =
+                            places[_currentPage].data() as Map<String, dynamic>;
                         _shareContent(data['title'], data['description']);
                       },
                       child: const Icon(Icons.share),
                     ),
                   ),
                 ],
-              ),
+              );
+            }
+          },
+        ),
       ),
     );
   }
