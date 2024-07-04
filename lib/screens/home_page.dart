@@ -79,6 +79,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  List<Map<String, dynamic>> categories = [
+    {'imagePath': 'assets/place.jpg', 'text': 'Places', 'screen': const PlacesScreen()},
+    {'imagePath': 'assets/people.jpg', 'text': 'People', 'screen': PeopleScreen()},
+    {'imagePath': 'assets/animal.jpg', 'text': 'Animals', 'screen': PeopleScreen()},
+    {'imagePath': 'assets/food.jpg', 'text': 'Foods', 'screen': PeopleScreen()},
+    {'imagePath': 'assets/culture.jpg', 'text': 'Cultures', 'screen': PeopleScreen()},
+  ];
+
   Widget buildListBoxes() {
     return GridView.count(
       shrinkWrap: true,
@@ -87,68 +95,18 @@ class _HomePageState extends State<HomePage> {
       childAspectRatio: 2 / 3,
       crossAxisSpacing: 15.0,
       mainAxisSpacing: 10.0,
-      children: [
-        ListBox(
-          imagePath: 'assets/place.jpg',
-          text: 'Places',
+      children: categories.map((category) {
+        return ListBox(
+          imagePath: category['imagePath'],
+          text: category['text'],
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => const PlacesScreen(),
-              ),
+              MaterialPageRoute(builder: (context) => category['screen']),
             );
           },
-        ),
-        ListBox(
-          imagePath: 'assets/people.jpg',
-          text: 'People',
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PeopleScreen(),
-              ),
-            );
-          },
-        ),
-        ListBox(
-          imagePath: 'assets/animal.jpg',
-          text: 'Animals',
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PeopleScreen(),
-              ),
-            );
-          },
-        ),
-        ListBox(
-          imagePath: 'assets/food.jpg',
-          text: 'Foods',
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PeopleScreen(),
-              ),
-            );
-          },
-        ),
-        ListBox(
-          imagePath: 'assets/culture.jpg',
-          text: 'Cultures',
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PeopleScreen(),
-              ),
-            );
-          },
-        ),
-      ],
+        );
+      }).toList(),
     );
   }
 
