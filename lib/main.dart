@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:historia/screens/auth/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:historia/screens/home_page.dart';
-import 'package:historia/screens/auth/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'provider/theme_provider.dart';
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
-    Widget initialScreen = user == null ? const LoginPage() : const HomePage();
+    Widget initialScreen = user == null ? const LoginScreen() : const HomePage();
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
         return MaterialApp(

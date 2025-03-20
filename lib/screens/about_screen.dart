@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:historia/components/drawer_widget.dart';
-import 'package:historia/screens/auth/login.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -10,7 +9,7 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
       drawer: AppDrawer(
         context: context,
-        userName: userName,
+        userName: 'userName',
       ),
       body: Container(
         decoration: const BoxDecoration(

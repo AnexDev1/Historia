@@ -9,3 +9,13 @@ localPropertiesFile.withReader("UTF-8") { reader -> properties.load(reader) }
 def flutterSdkPath = properties.getProperty("flutter.sdk")
 assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
 apply from: "$flutterSdkPath/packages/flutter_tools/gradle/app_plugin_loader.gradle"
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.2.1' // Upgrade to 8.2.1 for Java 21 compatibility
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0" // Update if necessary
+    }
+}
